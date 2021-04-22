@@ -7,11 +7,16 @@
           <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/GamifiedWeb/WebContent/WEB-INF/lib/web.xml" />
         </descriptors>
         <webroots>
-          <root url="file://$MODULE_DIR$/GamifiedWeb/WebContent" relative="/" />
+          <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
         </webroots>
         <sourceRoots>
-          <root url="file://$MODULE_DIR$/src/main/resources" />
+          <root url="file://$MODULE_DIR$/GamifiedEJB" />
+          <root url="file://$MODULE_DIR$/GamifiedEJB/ejbModule" />
+          <root url="file://$MODULE_DIR$/GamifiedWeb" />
+          <root url="file://$MODULE_DIR$/GamifiedWeb/src" />
+          <root url="file://$MODULE_DIR$/GamifiedWeb/WebContent" />
           <root url="file://$MODULE_DIR$/src/main/java" />
+          <root url="file://$MODULE_DIR$/src/main/resources" />
         </sourceRoots>
       </configuration>
     </facet>
@@ -31,16 +36,16 @@
     <facet type="ejb" name="EJB">
       <configuration>
         <descriptors>
-          <deploymentDescriptor name="ejb-jar.xml" url="file://$MODULE_DIR$/GamifiedEJB/build/classes/META-INF/ejb-jar.xml" />
+          <deploymentDescriptor name="ejb-jar.xml" url="file://$MODULE_DIR$/GamifiedEJB/ejbModule/META-INF/ejb-jar.xml" />
         </descriptors>
         <ejbRoots>
-          <root url="file://$MODULE_DIR$/GamifiedWeb" />
-          <root url="file://$MODULE_DIR$/src/main/resources" />
-          <root url="file://$MODULE_DIR$/GamifiedWeb/WebContent" />
-          <root url="file://$MODULE_DIR$/GamifiedEJB" />
           <root url="file://$MODULE_DIR$/GamifiedWeb/src" />
-          <root url="file://$MODULE_DIR$/src/main/java" />
           <root url="file://$MODULE_DIR$/GamifiedEJB/ejbModule" />
+          <root url="file://$MODULE_DIR$/GamifiedWeb" />
+          <root url="file://$MODULE_DIR$/GamifiedEJB" />
+          <root url="file://$MODULE_DIR$/src/main/java" />
+          <root url="file://$MODULE_DIR$/GamifiedWeb/WebContent" />
+          <root url="file://$MODULE_DIR$/src/main/resources" />
         </ejbRoots>
       </configuration>
     </facet>
@@ -62,6 +67,9 @@
     </content>
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="Java EE 6-Java EE 6 (2)" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax:javaee-web-api:8.0.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.resource:javax.resource-api:1.7.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.transaction:javax.transaction-api:1.3" level="project" />
@@ -87,7 +95,5 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.7.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.7.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.7.1" level="project" />
-    <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
-    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>

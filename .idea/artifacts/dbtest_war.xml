@@ -9,11 +9,6 @@
     </properties>
     <root id="archive" name="dbtest-1.0-SNAPSHOT.war">
       <element id="artifact" artifact-name="dbtest:war exploded" />
-      <element id="directory" name="WEB-INF">
-        <element id="directory" name="lib">
-          <element id="library" level="project" name="lib" />
-        </element>
-      </element>
     </root>
   </artifact>
 </component>
