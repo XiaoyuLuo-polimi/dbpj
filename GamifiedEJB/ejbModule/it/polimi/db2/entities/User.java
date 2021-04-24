@@ -21,8 +21,6 @@ public class User implements Serializable {
 
 	private String password;
 
-    @Id
-    @Column(name = "user_name")
 	private String username;
 
 	private int points;

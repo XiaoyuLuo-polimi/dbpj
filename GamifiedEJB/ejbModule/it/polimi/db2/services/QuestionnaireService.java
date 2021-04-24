@@ -32,6 +32,10 @@ public class QuestionnaireService {
         }
         return true;
     }
+    public Questionnaire getQuestionnaireById(int id){
+        Questionnaire questionnaire = em.find(Questionnaire.class,id);
+        return questionnaire;
+    }
     public void submitQuestionnaire(int age,String sex,String expLevel){
         Questionnaire questionnaire = null;
         questionnaire.setAge(age);

@@ -5,6 +5,7 @@ import java.util.List;
 @Entity
 @Table(name = "marketing_answer", schema = "db2")
 @NamedQuery(name = "answer.insertNewAnswer", query = "SELECT r FROM MarketingAnswer r  WHERE r.questionnaireId = ?1 and r.mktQuestionId = ?2")
+@NamedQuery(name = "answer.getTodayAnswerByMktQuestionId", query = "SELECT r FROM MarketingAnswer r  WHERE r.mktQuestionId = ?1")
 public class MarketingAnswer implements Serializable{
 
     private static final long serialVersionUID = 1L;

@@ -52,6 +52,10 @@ public class UserService {
 		}
 
 	}
+	public String getUsernameById(int id){
+		User user = em.find(User.class,id);
+		return user.getUsername();
+	}
 	public void updateProfile(User u) throws UpdateProfileException {
 		try {
 			em.merge(u);

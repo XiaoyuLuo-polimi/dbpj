@@ -1,5 +1,4 @@
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
@@ -9,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/GoAdminLoginPage")
@@ -28,14 +26,15 @@ public class GoToAdminCheckLoginPage extends HttpServlet {
         templateResolver.setSuffix(".html");
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String loginpath = this.getServletContext().getContextPath() + "/AdminIndex.html";
+        String loginpath = this.getServletContext().getContextPath() + "/adminindex.html";
 
-        String path = "/WEB-INF/AdminIndex.html";
-
-
+        String path = "/WEB-INF/adminindex.html";
+        System.out.print("********************************"+ "\n");
         System.out.print(this.getServletContext().getContextPath());
+        System.out.print("********************************"+ "\n");
         System.out.print(loginpath);
-        response.sendRedirect(path);
+        System.out.print("********************************"+ "\n");
+        response.sendRedirect(loginpath);
     }
 }
 //    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

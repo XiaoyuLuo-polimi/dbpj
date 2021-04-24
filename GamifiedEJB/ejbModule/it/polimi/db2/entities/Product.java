@@ -21,7 +21,7 @@ public class Product implements Serializable {
 
     private byte[] image;
 
-    @Column(name = "product_time")
+    @Column(name = "product_date")
     private LocalDate productTime;
 
     @Column(name = "admin_id")

@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
-<title>Login page</title>
+	<meta charset="ISO-8859-1">
+	<title>Login page</title>
 </head>
 <body>
-	<h1>Welcome to the mission management application</h1>
-	<div align="right">
-		<a th:href="@{/GoAdminLoginPage}">Home</a>
-	</div>
-	<form action="CheckLogin" method="POST">
-		Username: <input type="text" name="username" required> <br>
-		Password: <input type="password" name="pwd" required><br>
-		<input type="submit" value="login">
-		<p th:text=" ${errorMsg}"></p>
+<h1>User</h1>
+<div align="right">
+	<a th:href="@{/GoAdminLoginPage}">Home</a>
+</div>
+<form action="CheckLogin" method="POST">
+	Username: <input type="text" name="username" required> <br>
+	Password: <input type="password" name="pwd" required><br>
+	<input type="submit" value="login">
+	<p th:text=" ${errorMsg}"></p>
 
-	</form>
-	<a th:href="@{/Logout}">Logout</a>
-	<form th:action="@{/GoAdminLoginPage}" method="POST">
-		<button type="redi" name="action" value="submit">Admin Page</button>
-	</form>
+</form>
+
+<a th:href="@{/Logout}">Logout</a>
+
+<a href="/dbtest_war_exploded/adminidex.html">Home</a>
+
 
 </body>
 </html>

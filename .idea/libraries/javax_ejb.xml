@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="javax.ejb">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/javax.ejb.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javax.servlet.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javax.servlet.jsp.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javax.servlet.jsp.jstl.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/GamifiedEJB/ejbModule" />
+      <root url="file://$PROJECT_DIR$/GamifiedWeb/src" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+</head>
+    <meta charset="ISO-8859-1">
+    <title>Login page</title>
+</head>
+
+<body>
+<h1>Welcome to the Gamified application</h1>
+
+<h1>Welcome to the Mission Management Home Page</h1>
+<table>
+    <tbody>
+    <tr th:each="homePageShowContent : ${homePageShowContent}">
+
+        <td th:text="${homePageShowContent.questionContent}"></td>
+
+        <tr th:each="userAnswer : ${homePageShowContent.userAnswer}">
+            <td th:text="${userAnswer.key}"></td>
+            <td th:text="${userAnswer.value}"></td>
+        </tr>
+    </tr>
+    </tbody>
+</table>
+
+
+</body>
+</html>

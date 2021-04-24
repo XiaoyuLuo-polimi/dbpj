@@ -16,8 +16,6 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import it.polimi.db2.services.UserService;
-import it.polimi.db2.entities.User;
 import javax.persistence.NonUniqueResultException;
 
 @WebServlet("/AdminCheckLogin")
@@ -75,7 +73,7 @@ public class AdminCheckLogin extends HttpServlet {
             ServletContext servletContext = getServletContext();
             final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
             ctx.setVariable("errorMsg", "Incorrect username or password");
-            path = "/AdminIndex.html";
+            path = "/adminindex.html";
             templateEngine.process(path, ctx, response.getWriter());
         } else {
             request.getSession().setAttribute("administrator", administrator);

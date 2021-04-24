@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 @Entity
 @Table(name = "marketing_question", schema = "db2")
-
+@NamedQuery(name = "answer.getTodayQuestionByProdId", query = "SELECT r FROM MarketingQuestion r  WHERE r.productId = ?1")
 public class MarketingQuestion implements Serializable{
     private static final long serialVersionUID = 1L;
 
