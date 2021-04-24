@@ -12,22 +12,32 @@
 
 <body>
 <h1>Welcome to the Gamified application</h1>
-
-<h1>Welcome to the Mission Management Home Page</h1>
 <table>
     <tbody>
-    <tr th:each="homePageShowContent : ${homePageShowContent}">
-
-        <td th:text="${homePageShowContent.questionContent}"></td>
-
-        <tr th:each="userAnswer : ${homePageShowContent.userAnswer}">
-            <td th:text="${userAnswer.key}"></td>
-            <td th:text="${userAnswer.value}"></td>
+    <span th:each="h : ${homePageShowContents}">
+        <tr>
+            <td th:text="${h.questionContent}"></td>
         </tr>
-    </tr>
+        <span th:each="userAnswer : ${h.userAnswer}">
+            <tr>
+                <td th:text="${userAnswer.key}"></td>
+                <td th:text="${userAnswer.value}"></td>
+            </tr>
+        </span>
+    </span>
     </tbody>
 </table>
 
 
 </body>
 </html>
+<!--        <tr th:each="userAnswer : ${h.userAnswer}">-->
+<!--            <td th:text="${userAnswer.key}"></td>-->
+<!--            <td th:text="${userAnswer.value}"></td>-->
+<!--        </tr>-->
+
+<!--<span th:each="uat : ${h.answerTypeTwo}">-->
+<!--            <tr>-->
+<!--                <td th:text="${uat}"></td>-->
+<!--            </tr>-->
+<!--        </span>-->

@@ -1,5 +1,6 @@
 package it.polimi.db2.services;
 
+import it.polimi.db2.content.HomePageShowContent;
 import it.polimi.db2.entities.MarketingAnswer;
 import it.polimi.db2.entities.MarketingQuestion;
 import it.polimi.db2.entities.Questionnaire;
@@ -68,8 +69,10 @@ public class MarketingAnswerService {
             answerList = em.createNamedQuery("answer.getTodayAnswerByMktQuestionId", MarketingAnswer.class).setParameter(1, question.getId()).getResultList();
 
             HashMap<String,String> userAnswer = new HashMap<>();
+            //List<String> answerTypeTwo = new ArrayList<String>();
 
             for(MarketingAnswer answer : answerList){
+
                 //通过答案表获得问卷ID
                 Questionnaire questionnaire = questionnaireService.getQuestionnaireById(answer.getQuestionnaireId());
                 //此处可以得到questionnaireId
@@ -77,7 +80,7 @@ public class MarketingAnswerService {
                 // 通过questionnaire查到userid 通过userId查到username
                 String username = null;
                 username = userService.getUsernameById(questionnaire.getUserId());
-
+                //answerTypeTwo.add(username+" : "+answer.getAnswer());
                 userAnswer.put(username,answer.getAnswer());
             }
             singShowContent.userAnswer = userAnswer;
@@ -89,11 +92,4 @@ public class MarketingAnswerService {
     }
 
 
-
-
-    //MARKMARKMARKMAKRMARK
-    public class HomePageShowContent {
-        String questionContent;
-        HashMap<String,String> userAnswer;
-    }
 }

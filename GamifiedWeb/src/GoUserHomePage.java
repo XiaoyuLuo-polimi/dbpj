@@ -1,3 +1,4 @@
+import it.polimi.db2.content.HomePageShowContent;
 import it.polimi.db2.exceptions.DataNotExist;
 import it.polimi.db2.services.MarketingAnswerService;
 import it.polimi.db2.services.QuestionnaireService;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/UserHome")
@@ -33,20 +35,24 @@ public class GoUserHomePage extends HttpServlet {
         this.templateEngine.setTemplateResolver(templateResolver);
         templateResolver.setSuffix(".html");
     }
-    protected void doGet(Model model, HttpServletRequest request, HttpServletResponse response)
+
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Redirect to the Home page and add missions to the parameters
         String path = "/WEB-INF/UserHome.html";
         ServletContext servletContext = getServletContext();
-        List<MarketingAnswerService.HomePageShowContent> homePageShowContent = null;
+
+        List<HomePageShowContent> homePageShowContents = new ArrayList<HomePageShowContent>();
         try {
-            homePageShowContent = marketingAnswerService.getTodayAnswer();
+            homePageShowContents = marketingAnswerService.getTodayAnswer();
         } catch (DataNotExist dataNotExist) {
             dataNotExist.printStackTrace();
         }
 
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        ctx.setVariable("homePageShowContent", homePageShowContent);
+
+        ctx.setVariable("homePageShowContents", homePageShowContents);
         templateEngine.process(path, ctx, response.getWriter());
     }
 }
