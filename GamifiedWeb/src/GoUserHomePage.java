@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,12 @@ public class GoUserHomePage extends HttpServlet {
         // Redirect to the Home page and add missions to the parameters
         String path = "/WEB-INF/UserHome.html";
         ServletContext servletContext = getServletContext();
+        String loginpath = getServletContext().getContextPath() + "/index.html";
+        HttpSession session = request.getSession();
+        if (session.isNew() || session.getAttribute("user") == null) {
+            response.sendRedirect(loginpath);
+            return;
+        }
 
         List<HomePageShowContent> homePageShowContents = new ArrayList<HomePageShowContent>();
         try {

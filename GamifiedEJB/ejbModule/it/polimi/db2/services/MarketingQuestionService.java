@@ -33,6 +33,7 @@ public class MarketingQuestionService {
         int prodId = prodService.getTodayProductId();
         if(prodId == 0){
             throw new NonUniqueResultException("Today do not exist product");
+
         }
         else{
             List<MarketingQuestion> marketingQuestionList = null;

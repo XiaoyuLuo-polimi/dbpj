@@ -2,12 +2,14 @@ package it.polimi.db2.services;
 
 import it.polimi.db2.entities.Product;
 import it.polimi.db2.entities.User;
+import it.polimi.db2.exceptions.DataNotExist;
 import it.polimi.db2.exceptions.InvalidInsert;
 import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -45,13 +47,15 @@ public class ProductService {
 
         }
     }
-    public int getTodayProductId(){
+    public int getTodayProductId() throws DataNotExist{
         Product product = null;
 
         LocalDate date  = LocalDate.now();;
-
-        product = em.createNamedQuery("product.getProdByDate", Product.class).setParameter(1, date).getSingleResult();
-
+        try {
+            product = em.createNamedQuery("product.getProdByDate", Product.class).setParameter(1, date).getSingleResult();
+        } catch (PersistenceException var3) {
+            throw new DataNotExist("Cannot load projects");
+        }
         if(product != null){
             return product.getId();
         }

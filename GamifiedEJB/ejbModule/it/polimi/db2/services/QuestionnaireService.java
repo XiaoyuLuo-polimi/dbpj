@@ -20,9 +20,11 @@ public class QuestionnaireService {
 
     public QuestionnaireService() {
     }
-    public boolean validateIsAlreadySubmitQuestionnaire(){
+    public boolean validateIsAlreadySubmitQuestionnaire() throws DataNotExist{
         Questionnaire questionnaire = null;
+
         int pdId = prjService.getTodayProductId();
+
         questionnaire = em.createNamedQuery("questionnaire.getQuesById", Questionnaire.class).setParameter(1, pdId).getSingleResult();
         if(pdId!=0 && questionnaire != null){
             return true;
@@ -52,6 +54,4 @@ public class QuestionnaireService {
             em.remove(questionnaire);
         }
     }
-
-
 }
