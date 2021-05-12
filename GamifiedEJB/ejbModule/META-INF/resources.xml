@@ -2,7 +2,7 @@
 <resources>
         <Resource id="GamifiedDB" type="DataSource">
             JdbcDriver com.mysql.cj.jdbc.Driver
-            JdbcUrl jdbc:mysql://ec2-18-179-43-16.ap-northeast-1.compute.amazonaws.com:3306/db2?serverTimezone=Asia/Tokyo
+            JdbcUrl jdbc:mysql://ec2-18-182-53-44.ap-northeast-1.compute.amazonaws.com:3306/db2?serverTimezone=Asia/Tokyo
             Username root
             Password Aksd66
         </Resource>

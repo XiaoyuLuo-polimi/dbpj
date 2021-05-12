@@ -14,9 +14,19 @@
 		<class>it.polimi.db2.entities.OffensiveWord</class>
 		<class>it.polimi.db2.entities.Questionnaire</class>
 		<class>it.polimi.db2.entities.Product</class>
+        <class>genentity.AdministratorEntity</class>
+        <class>genentity.MarketingAnswerEntity</class>
+        <class>genentity.MarketingQuestionEntity</class>
+        <class>genentity.OffensiveWordEntity</class>
+        <class>genentity.ProductEntity</class>
+        <class>genentity.QuestionnaireEntity</class>
+        <class>genentity.UserEntity</class>
 
-		<properties>
+        <properties>
 			<property name="eclipselink.logging.level" value="FINE" />
-		</properties>
+            <property name="eclipselink.jdbc.url"
+                      value="jdbc:mysql://ec2-18-179-43-16.ap-northeast-1.compute.amazonaws.com:3306/db2"/>
+            <property name="eclipselink.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+        </properties>
 	</persistence-unit>
 </persistence>

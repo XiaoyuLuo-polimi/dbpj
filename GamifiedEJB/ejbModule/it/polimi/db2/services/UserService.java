@@ -27,7 +27,7 @@ public class UserService {
 		} catch (PersistenceException e) {
 			System.out.print("Could not verify credentals");
 		}
-		if (uList.isEmpty())
+		if (uList == null)
 			return null;
 		else if (uList.size() == 1)
 			return uList.get(0);
@@ -35,7 +35,6 @@ public class UserService {
 
 	}
 	public void registerNewUser(String username,String pwd,String email) throws InvalidInsert{
-
 		User user = null;
 		user = em.createNamedQuery("User.checkUsername", User.class).setParameter(1, username).getSingleResult();
 
@@ -50,7 +49,6 @@ public class UserService {
 			this.em.persist(user);
 			this.em.flush();
 		}
-
 	}
 	public String getUsernameById(int id){
 		User user = em.find(User.class,id);

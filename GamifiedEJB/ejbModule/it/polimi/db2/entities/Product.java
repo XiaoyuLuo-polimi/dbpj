@@ -6,6 +6,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Entity
 @Table(name = "product", schema = "db2")
 
@@ -19,6 +21,7 @@ public class Product implements Serializable {
 
     private String name;
 
+    @Lob
     private byte[] image;
 
     @Column(name = "product_date")
@@ -26,6 +29,29 @@ public class Product implements Serializable {
 
     @Column(name = "admin_id")
     private int adminId;
+
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
+    private List<MarketingQuestion> marketingQuestion;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+    private List<Questionnaire> questionnaires;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "admin_id",insertable = false,updatable = false)
+    private Administrator admin;
+
+    public void setProductTime(LocalDate productTime) {
+        this.productTime = productTime;
+    }
+
+    public Administrator getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Administrator admin) {
+        this.admin = admin;
+    }
 
     public int getId() {
         return id;
@@ -65,5 +91,21 @@ public class Product implements Serializable {
 
     public void setAdminId(int adminId) {
         this.adminId = adminId;
+    }
+
+    public List<Questionnaire> getQuestionnaires() {
+        return questionnaires;
+    }
+
+    public void setQuestionnaires(List<Questionnaire> questionnaires) {
+        this.questionnaires = questionnaires;
+    }
+
+    public List<MarketingQuestion> getMarketingQuestion() {
+        return marketingQuestion;
+    }
+
+    public void setMarketingQuestion(List<MarketingQuestion> marketingQuestion) {
+        this.marketingQuestion = marketingQuestion;
     }
 }

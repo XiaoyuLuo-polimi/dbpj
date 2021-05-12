@@ -15,6 +15,7 @@ public class OffensiveWordService {
     private EntityManager em;
     public OffensiveWordService() {
     }
+
     public void checkReplica(String word) throws InvalidInsert {
         OffensiveWord ofword = null;
         ofword = em.createNamedQuery("offensiveword.checkWord", OffensiveWord.class).setParameter(1, word).getSingleResult();

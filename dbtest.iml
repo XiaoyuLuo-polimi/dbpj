@@ -7,12 +7,9 @@
           <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/GamifiedWeb/WebContent/WEB-INF/lib/web.xml" />
         </descriptors>
         <webroots>
-          <root url="file://$MODULE_DIR$/GamifiedWeb/WebContent" relative="/" />
+          <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
         </webroots>
-        <sourceRoots>
-          <root url="file://$MODULE_DIR$/GamifiedWeb/WebContent" />
-          <root url="file://$MODULE_DIR$/GamifiedWeb/src" />
-        </sourceRoots>
+        <sourceRoots />
       </configuration>
     </facet>
     <facet type="jpa" name="JPA">
@@ -20,7 +17,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="EclipseLink" />
         <datasource-mapping>
-          <factory-entry name="GamifiedEJB" />
+          <factory-entry name="GamifiedEJB" value="5a89f4f3-da48-4ae0-b401-c82ea8c3fa5d" />
           <factory-entry name="MissionExpensesEJB" />
           <factory-entry name="dbtest" />
         </datasource-mapping>

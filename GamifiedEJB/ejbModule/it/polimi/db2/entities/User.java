@@ -12,6 +12,7 @@ import javax.persistence.*;
 @NamedQuery(name = "User.checkCredentials", query = "SELECT r FROM User r  WHERE r.username = ?1 and r.password = ?2")
 @NamedQuery(name = "User.checkUsername", query = "SELECT r FROM User r  WHERE r.username = ?1")
 
+
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -29,6 +30,8 @@ public class User implements Serializable {
 
 	private int isblocked;
 
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "user")
+	private Questionnaire questionnaire;
 	// Bidirectional many-to-one association to Mission
 	/*
 	 * Fetch type EAGER allows resorting the relationship list content also in the

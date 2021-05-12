@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<form action="#" th:action="@{/CreateQuestionnary}" enctype='multipart/form-data' method="POST">
+    <fieldset>
+        Image:<input type="file"  name="image"  required><br>
+        <p>
+            Product name: <input type="text"  name="productName"  required>
+        </p>
+        <input type="submit" name="Product">
+        <p th:text=" ${errorMsg}"></p>
+    </fieldset>
+</form>
+
+
+</body>
+</html>

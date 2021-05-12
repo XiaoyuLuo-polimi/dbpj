@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<form action="CreateCustomQuestion" method="POST">
+  <fieldset>
+    <p>
+      Question name: <input type="text"  name="question"  required>
+    </p>
+    <input type="submit" name="Product">
+    <p th:text=" ${errorMsg}"></p>
+  </fieldset>
+  <div align="left">
+    <a th:href="@{/AdminHome}">Finish and return to Home page</a>
+  </div>
+</form>
+
+
+</body>
+</html>
+
+
+

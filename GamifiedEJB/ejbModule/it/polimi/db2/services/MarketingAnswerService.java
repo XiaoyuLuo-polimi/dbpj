@@ -1,6 +1,7 @@
 package it.polimi.db2.services;
 
 import it.polimi.db2.content.HomePageShowContent;
+import it.polimi.db2.content.HomePageShowContent;
 import it.polimi.db2.entities.MarketingAnswer;
 import it.polimi.db2.entities.MarketingQuestion;
 import it.polimi.db2.entities.Questionnaire;
@@ -56,7 +57,13 @@ public class MarketingAnswerService {
 
         List<MarketingQuestion> marketingQuestionList = null;
         //得到今天的全部问题 Q1 Q2
-        marketingQuestionList = quesService.getTodayQuestion();
+        try {
+            marketingQuestionList = quesService.getTodayQuestion();
+        }
+        catch (Exception e){
+            throw new DataNotExist("Today do not exist product");
+        }
+
         List<MarketingAnswer> answerList = null;
 
         //FIRST LOOP 摘出来每个问题的全部用户的回答

@@ -12,8 +12,33 @@ public class MarketingQuestion implements Serializable{
     private int id;
     @Column(name = "question_content")
     private String questionContent;
+
     @Column(name = "product_id")
     private int productId;
+
+    //这是儿子表，他没有外键
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "marketingQuestion")
+    private List<MarketingAnswer> marketingAnswers;
+
+    public List<MarketingAnswer> getMarketingAnswers() {
+        return marketingAnswers;
+    }
+
+    public void setMarketingAnswers(List<MarketingAnswer> marketingAnswers) {
+        this.marketingAnswers = marketingAnswers;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "product_id",insertable = false,updatable = false)
+    private Product product;
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
     public int getId() {
         return id;
@@ -38,8 +63,5 @@ public class MarketingQuestion implements Serializable{
     public void setQuestionContent(String questionContent) {
         this.questionContent = questionContent;
     }
-
-
-
 
 }

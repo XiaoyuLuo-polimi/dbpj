@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import java.util.List;
 
 @Stateless
@@ -25,20 +26,28 @@ public class MarketingQuestionService {
 
     ;
 
-    public void insertQuesToProd(String questionContent, String productId) throws DataNotExist {
-
-    }
-
-    public List<MarketingQuestion> getTodayQuestion() throws DataNotExist{
-        int prodId = prodService.getTodayProductId();
-        if(prodId == 0){
-            throw new NonUniqueResultException("Today do not exist product");
-
+    public void insertQuesToProd(String questionContent, int productId) throws InvalidInsert {
+        MarketingQuestion marketingQuestion = new MarketingQuestion();
+        marketingQuestion.setQuestionContent(questionContent);
+        marketingQuestion.setProductId(productId);
+        try {
+            this.em.persist(marketingQuestion);
         }
-        else{
+        catch(Exception e){
+            throw new InvalidInsert("More than one test mission without project");
+        }
+    }
+    
+    public List<MarketingQuestion> getTodayQuestion() throws DataNotExist{
+        try {
+            int prodId = prodService.getTodayProductId();
             List<MarketingQuestion> marketingQuestionList = null;
             marketingQuestionList = em.createNamedQuery("answer.getTodayQuestionByProdId",MarketingQuestion.class).setParameter(1, prodId).getResultList();
             return marketingQuestionList;
         }
-    }
+        catch (PersistenceException var3){
+            throw new DataNotExist("Today do not exist product");
+        }
+        }
+
 }

@@ -3,6 +3,9 @@ package it.polimi.db2.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+
 @Entity
 @Table(name = "questionnaire", schema = "db2")
 @NamedQuery(name = "questionnaire.getQuesById", query = "SELECT r FROM Questionnaire r  WHERE r.productId = ?1")
@@ -23,11 +26,36 @@ public class Questionnaire implements Serializable {
     @Column(name = "create_time")
     private LocalDateTime createTime;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id",insertable = false,updatable = false)
+    private Product product;
+
     @Column(name = "product_id")
     private int productId;
 
     @Column(name = "admin_id")
     private int adminId;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id",insertable = false,updatable = false)
+    private User user;
+
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
 
     @Column(name = "user_id")
     private int userId;
@@ -75,12 +103,12 @@ public class Questionnaire implements Serializable {
         this.createTime = createTime;
     }
 
-    public int getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public int getAdminId() {

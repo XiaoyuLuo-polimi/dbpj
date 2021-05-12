@@ -41,6 +41,33 @@ public class MarketingAnswer implements Serializable{
     @Column(name = "mkt_question_id")
     private int mktQuestionId;
 
+    //外键在谁哪谁是爸爸
+    //爸爸名字写外键
+    //爸爸是JoinColum
+    @ManyToOne
+    @JoinColumn(name = "mkt_question_id",insertable = false,updatable = false)
+    private MarketingQuestion marketingQuestion;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "questionnaire_id",insertable = false,updatable = false)
+    private Questionnaire questionnaire;
+
+    public MarketingQuestion getMarketingQuestion() {
+        return marketingQuestion;
+    }
+
+    public void setMarketingQuestion(MarketingQuestion marketingQuestion) {
+        this.marketingQuestion = marketingQuestion;
+    }
+
+    public Questionnaire getQuestionnaire() {
+        return questionnaire;
+    }
+
+    public void setQuestionnaire(Questionnaire questionnaire) {
+        this.questionnaire = questionnaire;
+    }
+
     private String answer;
 
     public MarketingAnswer() {

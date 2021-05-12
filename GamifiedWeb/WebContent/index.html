@@ -6,9 +6,7 @@
 </head>
 <body>
 <h1>User</h1>
-<div align="right">
-	<a th:href="@{/GoAdminLoginPage}">Home</a>
-</div>
+
 <form action="CheckLogin" method="POST">
 	Username: <input type="text" name="username" required> <br>
 	Password: <input type="password" name="pwd" required><br>
@@ -16,11 +14,7 @@
 	<p th:text=" ${errorMsg}"></p>
 
 </form>
-
 <a th:href="@{/Logout}">Logout</a>
-
-<a href="/dbtest_war_exploded/adminidex.html">Home</a>
-
-
+<a th:href="@{/AdminCheckLogin}">Admin index</a>
 </body>
 </html>
