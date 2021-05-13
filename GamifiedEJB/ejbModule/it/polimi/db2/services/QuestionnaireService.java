@@ -11,8 +11,11 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Stateless
@@ -46,6 +49,11 @@ public class QuestionnaireService {
     public Questionnaire getQuestionnaireById(int id){
         Questionnaire questionnaire = em.find(Questionnaire.class,id);
         return questionnaire;
+    }
+    public List<Questionnaire> getAllSubmittedQuestionnaire(){
+        List<Questionnaire> questionnairesList = new ArrayList<>();
+        questionnairesList = em.createNamedQuery("questionnaire.getAllquestionnaire", Questionnaire.class).getResultList();
+        return questionnairesList;
     }
 
     public Questionnaire getQuestionnaireByUserId(int uId, LocalDateTime dateTime) throws NoResultException {
@@ -119,6 +127,22 @@ public class QuestionnaireService {
             }
 
 
+    }
+    public void deleteQuestionnaireByModifyField(int questionnaireId,int adminId) throws NoResultException {
+        Questionnaire questionnaire = new Questionnaire();
+        try{
+            questionnaire = em.find(Questionnaire.class,questionnaireId);
+            this.em.flush();
+        }catch(PersistenceException e){
+            throw new NoResultException("ERROR");
+        }
+        questionnaire.setAdminId(adminId);
+        try{
+            this.em.persist(questionnaire);
+            this.em.flush();
+        }catch(PersistenceException e){
+            throw new NoResultException("ERROR");
+        }
     }
 
     public void deleteQuestionnaire(int questionnaireId) throws NoResultException {
