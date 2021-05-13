@@ -14,7 +14,8 @@
 	<p th:text=" ${errorMsg}"></p>
 
 </form>
-<a th:href="@{/Logout}">Logout</a>
-<a th:href="@{/AdminCheckLogin}">Admin index</a>
+<form action="AdminCheckLogin" method="GET">
+	<input type="submit" value="Go To Admin Page">
+</form>
 </body>
 </html>

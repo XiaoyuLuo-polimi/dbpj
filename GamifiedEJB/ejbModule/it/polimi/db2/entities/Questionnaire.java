@@ -9,6 +9,7 @@ import java.util.Map;
 @Entity
 @Table(name = "questionnaire", schema = "db2")
 @NamedQuery(name = "questionnaire.getQuesById", query = "SELECT r FROM Questionnaire r  WHERE r.productId = ?1")
+@NamedQuery(name = "questionnaire.getQuesByDate", query = "SELECT r FROM Questionnaire r  WHERE r.createTime = ?1 and r.isCancelled =?2")
 public class Questionnaire implements Serializable {
     private static final long serialVersionUID = 1L;
 

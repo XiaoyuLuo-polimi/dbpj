@@ -28,7 +28,7 @@ public class AdministratorService {
         } catch (PersistenceException e) {
             System.out.print("Could not verify credentals");
         }
-        if (uList.isEmpty())
+        if (uList == null)
             return null;
         else if (uList.size() == 1)
             return uList.get(0);

@@ -14,7 +14,7 @@
 <h1>Welcome to the Gamified application</h1>
 <td th:text="${product.getName()}"></td><br>
 <td th:text="${product.getProductTime()}"></td><br>
-<img width="150px" alt="photo" th:src="*{'data:image/png;base64,'+product.getImage()}"> <br>
+<img width="150px" alt="photo" th:src="*{'data:image/png;base64,'+product.getImageData()}"> <br>
 <p th:text=" ${errorMsg}"></p>
 
 <table>
@@ -39,8 +39,8 @@
 </span>
     </tbody>
 </table>
-
-
+<a th:href="@{/Logout}">Logout</a>
+<a th:href="@{/ScoreBoard}">ScoreBoard</a>
 
 </body>
 </html>

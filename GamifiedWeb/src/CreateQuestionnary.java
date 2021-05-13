@@ -79,7 +79,7 @@ public class CreateQuestionnary extends HttpServlet {
         String productName = null;
         Part filePart = null;
         InputStream imageStream = null;
-        String image = null;
+
         response.setContentType("multipart/form-data;charset=utf-8");
         try {
             productName = StringEscapeUtils.escapeJava(request.getParameter("productName"));
@@ -87,8 +87,19 @@ public class CreateQuestionnary extends HttpServlet {
             String contentType = filePart.getContentType();
             imageStream = filePart.getInputStream();
 
+            if (productName == null || productName.isEmpty() ||
+                    contentType == null || imageStream.available()<=0) {
+                throw new Exception("No empty filed!");
+            }
+            if (!contentType.contains("jpg")
+                    && !contentType.contains("jpeg")
+                    && !contentType.contains("png")){
+                throw new Exception("You can only upload jpg/jpeg or png image");
+            }
         } catch (NumberFormatException | NullPointerException e) {
             isBadRequest = true;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         if (isBadRequest) {
@@ -98,8 +109,8 @@ public class CreateQuestionnary extends HttpServlet {
 
         //
         // Create mission in DB
-        image = "123";
         Administrator admin = (Administrator) session.getAttribute("administrator");
+
         int imageLength = (int) filePart.getSize();
         byte[] bytesImage = new byte[imageLength];
         imageStream.read(bytesImage);

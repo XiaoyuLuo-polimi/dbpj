@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.List;
 
 @Entity
@@ -40,6 +41,11 @@ public class Product implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id",insertable = false,updatable = false)
     private Administrator admin;
+
+    public String getImageData() {
+        return Base64.getMimeEncoder().encodeToString(image);
+    }
+
 
     public void setProductTime(LocalDate productTime) {
         this.productTime = productTime;

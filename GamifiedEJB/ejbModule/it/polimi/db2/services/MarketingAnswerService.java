@@ -1,7 +1,6 @@
 package it.polimi.db2.services;
 
 import it.polimi.db2.content.HomePageShowContent;
-import it.polimi.db2.content.HomePageShowContent;
 import it.polimi.db2.entities.MarketingAnswer;
 import it.polimi.db2.entities.MarketingQuestion;
 import it.polimi.db2.entities.Questionnaire;

@@ -42,7 +42,7 @@ public class ProductService {
     public Product getTodayProduct() throws DataNotExist{
         Product product = new Product();
 
-        LocalDate date  = LocalDate.now();;
+        LocalDate date  = LocalDate.now();
         try {
             product = em.createNamedQuery("product.getProdByDate", Product.class).setParameter(1, date).getSingleResult();
         } catch (PersistenceException var3) {

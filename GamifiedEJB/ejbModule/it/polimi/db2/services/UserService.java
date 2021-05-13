@@ -9,6 +9,9 @@ import javax.persistence.NonUniqueResultException;
 import it.polimi.db2.exceptions.UpdateProfileException;
 import it.polimi.db2.entities.User;
 import it.polimi.db2.exceptions.*;
+
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
@@ -19,6 +22,15 @@ public class UserService {
 	public UserService() {
 	}
 
+	public List<User> getUserOrderByPoint() throws NonUniqueResultException{
+		List<User> userList = new ArrayList<>();
+		try {
+			userList = em.createNamedQuery("User.getUserOrderByPoint", User.class).getResultList();
+		}catch (PersistenceException e) {
+			System.out.print("Could not verify credentals");
+		}
+		return userList;
+	}
 	public User checkCredentials(String usrn, String pwd) throws NonUniqueResultException {
 		List<User> uList = null;
 		try {
