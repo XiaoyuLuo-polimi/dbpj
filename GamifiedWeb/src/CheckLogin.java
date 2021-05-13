@@ -19,6 +19,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import it.polimi.db2.services.UserService;
 import it.polimi.db2.entities.User;
 import javax.persistence.NonUniqueResultException;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/CheckLogin")
 public class CheckLogin extends HttpServlet {
@@ -43,7 +44,15 @@ public class CheckLogin extends HttpServlet {
 		this.templateEngine.setTemplateResolver(templateResolver);
 		templateResolver.setSuffix(".html");
 	}
-
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// Redirect to the Home page and add missions to the parameters
+		String path = "/index.html";
+		ServletContext servletContext = getServletContext();
+		HttpSession session = request.getSession();
+		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		templateEngine.process(path, ctx, response.getWriter());
+	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// obtain and escape params
