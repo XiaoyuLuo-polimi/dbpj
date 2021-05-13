@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import it.polimi.db2.entities.Administrator;
-import it.polimi.db2.exceptions.InvalidInsert;
 import it.polimi.db2.services.AdministratorService;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.thymeleaf.TemplateEngine;
@@ -18,7 +17,6 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.persistence.NonUniqueResultException;
-import javax.servlet.http.HttpSession;
 
 @WebServlet("/AdminCheckLogin")
 public class AdminCheckLogin extends HttpServlet {
@@ -40,43 +38,33 @@ public class AdminCheckLogin extends HttpServlet {
         templateResolver.setSuffix(".html");
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // Redirect to the Home page and add missions to the parameters
-        String path = "/AdminIndex.html";
-        ServletContext servletContext = getServletContext();
-        HttpSession session = request.getSession();
-        final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        templateEngine.process(path, ctx, response.getWriter());
-    }
-
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // obtain and escape params
         String usrn = null;
         String pwd = null;
         try {
-            usrn = StringEscapeUtils.escapeJava(request.getParameter("adminname"));
+            usrn = StringEscapeUtils.escapeJava(request.getParameter("username"));
             pwd = StringEscapeUtils.escapeJava(request.getParameter("pwd"));
             if (usrn == null || pwd == null || usrn.isEmpty() || pwd.isEmpty()) {
                 throw new Exception("Missing or empty credential value");
             }
+
         } catch (Exception e) {
             // for debugging only e.printStackTrace();
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing credential value");
             return;
         }
         Administrator administrator;
-//        try {
-//            // query db to authenticate for administrator
-//            administrator = administratorService.checkCredentials(usrn, pwd);
-//        } catch (NonUniqueResultException e) {
-//            e.printStackTrace();
-//            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");
-//            return;
-//        }
-        administrator = administratorService.checkCredentials(usrn, pwd);
+        try {
+            // query db to authenticate for administrator
+            administrator = administratorService.checkCredentials(usrn, pwd);
+        } catch (NonUniqueResultException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");
+            return;
+        }
+
         // If the administrator exists, add info to the session and go to home page, otherwise
         // show login page with error message
 
@@ -85,13 +73,11 @@ public class AdminCheckLogin extends HttpServlet {
             ServletContext servletContext = getServletContext();
             final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
             ctx.setVariable("errorMsg", "Incorrect username or password");
-            path = "/AdminIndex.html";
+            path = "/adminindex.html";
             templateEngine.process(path, ctx, response.getWriter());
-
         } else {
-
             request.getSession().setAttribute("administrator", administrator);
-            path = getServletContext().getContextPath() + "/AdminHome";
+            path = getServletContext().getContextPath() + "/Home";
             response.sendRedirect(path);
         }
 

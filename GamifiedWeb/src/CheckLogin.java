@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import it.polimi.db2.exceptions.CannotConnectToDB;
+import it.polimi.db2.services.ProductService;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -17,14 +19,17 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import it.polimi.db2.services.UserService;
 import it.polimi.db2.entities.User;
 import javax.persistence.NonUniqueResultException;
-import javax.servlet.http.HttpSession;
 
 @WebServlet("/CheckLogin")
 public class CheckLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
+
 	@EJB(name = "it.polimi.db2.services/UserService")
 	private UserService usrService;
+
+	@EJB(name = "it.polimi.db2.services/ProductService")
+	private ProductService productService;
 
 	public CheckLogin() {
 		super();
@@ -38,17 +43,6 @@ public class CheckLogin extends HttpServlet {
 		this.templateEngine.setTemplateResolver(templateResolver);
 		templateResolver.setSuffix(".html");
 	}
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Redirect to the Home page and add missions to the parameters
-		String path = "/index.html";
-		ServletContext servletContext = getServletContext();
-		HttpSession session = request.getSession();
-		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		templateEngine.process(path, ctx, response.getWriter());
-	}
-
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -71,8 +65,8 @@ public class CheckLogin extends HttpServlet {
 		try {
 			// query db to authenticate for user
 			user = usrService.checkCredentials(usrn, pwd);
-		} catch (NonUniqueResultException e) {
-			e.printStackTrace();
+		} catch (NonUniqueResultException | CannotConnectToDB e) {
+			//e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");
 			return;
 		}
@@ -91,6 +85,22 @@ public class CheckLogin extends HttpServlet {
 			request.getSession().setAttribute("user", user);
 			path = getServletContext().getContextPath() + "/UserHome";
 			response.sendRedirect(path);
+
+//			Product product=productService.getTodayProduct();
+//			System.out.println(product);
+//			List<MarketingQuestion> marketingQuestionList=product.getMarketingQuestionsList();
+//			System.out.println(marketingQuestionList.size());
+//			for(int i=0;i<marketingQuestionList.size();i++){
+//				System.out.println(marketingQuestionList.get(i).getId()+","+marketingQuestionList.get(i).getQuestionContent());
+//				Map<Questionnaire,String> questionnaires=marketingQuestionList.get(i).getQuestionnaireMap();
+//				System.out.println(questionnaires.size()+","+questionnaires.keySet());
+////				for(Questionnaire questionnaire: questionnaires.keySet()){
+////					questionnaire.setMarketingAnswers(marketingQuestionList.get(i),"I AM answer of "+i );
+////				}
+//				for(Questionnaire questionnaire: questionnaires.keySet()) {
+//					System.out.println(questionnaires.get(questionnaire));
+//				}
+//			}
 		}
 
 	}

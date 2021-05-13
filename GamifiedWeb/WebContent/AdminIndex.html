@@ -8,13 +8,11 @@
 <h1>Welcome to the mission management application admin login page</h1>
 
 <form action="AdminCheckLogin" method="POST">
-    Username: <input type="text" name="adminname" required> <br>
+    Username: <input type="text" name="username" required> <br>
     Password: <input type="password" name="pwd" required><br>
     <input type="submit" value="login">
     <p th:text=" ${errorMsg}"></p>
 </form>
-<form action="CheckLogin" method="GET">
-    <input type="submit" value="Go To User Page">
-</form>
+
 </body>
 </html>

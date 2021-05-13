@@ -3,13 +3,15 @@ package it.polimi.db2.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Entity
 @Table(name = "questionnaire", schema = "db2")
 @NamedQuery(name = "questionnaire.getQuesById", query = "SELECT r FROM Questionnaire r  WHERE r.productId = ?1")
-@NamedQuery(name = "questionnaire.getQuesByDate", query = "SELECT r FROM Questionnaire r  WHERE r.createTime = ?1 and r.isCancelled =?2")
+@NamedQuery(name = "questionnaire.getQuesByUserId", query = "SELECT r FROM Questionnaire r  WHERE r.userId = ?1 and r.createTime >= ?2")
+
 public class Questionnaire implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -27,36 +29,11 @@ public class Questionnaire implements Serializable {
     @Column(name = "create_time")
     private LocalDateTime createTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id",insertable = false,updatable = false)
-    private Product product;
-
     @Column(name = "product_id")
     private int productId;
 
     @Column(name = "admin_id")
     private int adminId;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id",insertable = false,updatable = false)
-    private User user;
-
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
 
     @Column(name = "user_id")
     private int userId;
@@ -104,12 +81,12 @@ public class Questionnaire implements Serializable {
         this.createTime = createTime;
     }
 
-    public Product getProduct() {
-        return product;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public int getAdminId() {
@@ -135,5 +112,94 @@ public class Questionnaire implements Serializable {
     public void setIsCancelled(int isCancelled) {
         this.isCancelled = isCancelled;
     }
+
+
+
+    @ManyToOne
+    @JoinColumn(name="user_id",insertable = false,updatable = false)
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "admin_id",insertable = false,updatable = false)
+    private Administrator administrator;
+
+    public Administrator getAdministrator() {
+        return administrator;
+    }
+
+    public void setAdministrator(Administrator administrator) {
+        this.administrator = administrator;
+    }
+
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "product_id",insertable = false,updatable = false)
+    private Product product;
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "marketing_answer",
+            joinColumns = @JoinColumn(name = "questionnaire_id")
+    )
+    //if the map key type is another entity.
+    @MapKeyJoinColumn(name = "mkt_question_id")
+    @Column(name = "answer")
+    private Map<MarketingQuestion,String> marketingAnswers;
+
+
+
+    @ManyToMany
+    @JoinTable(name="marketing_answer",
+            joinColumns = @JoinColumn(name = "questionnaire_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "mkt_question_id", referencedColumnName = "id"))
+    private List<MarketingQuestion> marketingQuestions;
+
+
+    public List<MarketingQuestion> getMarketingQuestions() {
+        return marketingQuestions;
+    }
+
+    public void setMarketingQuestions(List<MarketingQuestion> marketingQuestions) {
+        this.marketingQuestions = marketingQuestions;
+    }
+
+
+    public Map<MarketingQuestion, String> getMarketingAnswerMap() {
+        return marketingAnswers;
+    }
+
+    public void setMarketingAnswerMap(Map<MarketingQuestion,String> marketingAnswerMaps) {
+        this.marketingAnswers = marketingAnswerMaps;
+    }
+
+
+    public void removeMarketingAnswer(MarketingQuestion mq){
+        marketingAnswers.remove(mq);
+    }
+
+
+
+
 }
 

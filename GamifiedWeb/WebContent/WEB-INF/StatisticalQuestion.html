@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Statistical Questions page</title>
+</head>
+<body>
+<h1>Section 2:Statistical Questions(Optional)</h1>
+<p th:text=" ${errorMsgStat}"></p>
+
+<div>
+    <form action="SubmitQuestionnaire" method="POST">
+        <table>
+            <tr th:if="${#strings.isEmpty(errorMsgStat)}">
+                <td>Your age?</td>
+                <td>
+                    <input type="text" name="age" th:value="${session.age}?${session.age}">
+                </td>
+            </tr>
+            <tr th:if="${#strings.isEmpty(errorMsgStat)}">
+                <td>Your gender?</td>
+                <td>
+                    <select name="gender">
+                        <option></option>
+                        <option th:selected="${session.gender eq 'Male'}">Male</option>
+                        <option th:selected="${session.gender eq 'Female'}">Female</option>
+                    </select>
+                </td>
+            </tr>
+            <tr th:if="${#strings.isEmpty(errorMsgStat)}">
+                <td>Your expertise level?</td>
+                <td>
+                    <select name="expLevel">
+                        <option></option>
+                        <option th:selected="${session.expLevel eq 'Low'}">Low</option>
+                        <option th:selected="${session.expLevel eq 'Medium'}">Medium</option>
+                        <option th:selected="${session.expLevel eq 'High'}">High</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td th:if="${#strings.isEmpty(errorMsgStat)}"><input name="complete" type="submit" value="Previous Page"></td>
+                <td th:if="${#strings.isEmpty(errorMsgStat)}"><input name="complete" type="submit" value="Cancel"></td>
+                <td th:if="${#strings.isEmpty(errorMsgStat)}"><input name="complete" type="submit" value="Submit"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+
+</body>
+</html>

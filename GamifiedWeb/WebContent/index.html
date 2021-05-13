@@ -8,14 +8,19 @@
 <h1>User</h1>
 
 <form action="CheckLogin" method="POST">
-	Username: <input type="text" name="username" required> <br>
+	Username: <input type="text" name="username" th:href="${session.new_username}?${session.new_username}" required> <br>
 	Password: <input type="password" name="pwd" required><br>
-	<input type="submit" value="login">
-	<p th:text=" ${errorMsg}"></p>
+	<table>
+		<tr>
+			<td>
+				<input type="submit" value="login">
+			</td>
+			<td>
+				<a href="Register.html">Register</a>
+			</td>
+		</tr>
+	</table>
+</form>
 
-</form>
-<form action="AdminCheckLogin" method="GET">
-	<input type="submit" value="Go To Admin Page">
-</form>
 </body>
 </html>

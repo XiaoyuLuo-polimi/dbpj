@@ -1,16 +1,13 @@
 package it.polimi.db2.services;
 
-import it.polimi.db2.entities.MarketingAnswer;
 import it.polimi.db2.entities.MarketingQuestion;
-import it.polimi.db2.exceptions.DataNotExist;
-import it.polimi.db2.exceptions.InvalidInsert;
+import it.polimi.db2.exceptions.DuplicateInsertion;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NonUniqueResultException;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
 import java.util.List;
 
 @Stateless
@@ -26,28 +23,21 @@ public class MarketingQuestionService {
 
     ;
 
-    public void insertQuesToProd(String questionContent, int productId) throws InvalidInsert {
-        MarketingQuestion marketingQuestion = new MarketingQuestion();
-        marketingQuestion.setQuestionContent(questionContent);
-        marketingQuestion.setProductId(productId);
-        try {
-            this.em.persist(marketingQuestion);
-        }
-        catch(Exception e){
-            throw new InvalidInsert("More than one test mission without project");
-        }
+    public void insertQuesToProd(String questionContent, String productId) throws DuplicateInsertion {
+
     }
-    
-    public List<MarketingQuestion> getTodayQuestion() throws DataNotExist{
-        try {
-            int prodId = prodService.getTodayProductId();
-            List<MarketingQuestion> marketingQuestionList = null;
-            marketingQuestionList = em.createNamedQuery("answer.getTodayQuestionByProdId",MarketingQuestion.class).setParameter(1, prodId).getResultList();
-            return marketingQuestionList;
-        }
-        catch (PersistenceException var3){
-            throw new DataNotExist("Today do not exist product");
-        }
-        }
+
+//    public List<MarketingQuestion> getTodayQuestion() throws NoResultException {
+//        int prodId = prodService.getTodayProductId();
+//
+//        if(prodId == 0){
+//            return null;
+//        }
+//        else{
+//            List<MarketingQuestion> marketingQuestionList = null;
+//            marketingQuestionList = em.createNamedQuery("answer.getTodayQuestionByProdId",MarketingQuestion.class).setParameter(1, prodId).getResultList();
+//            return marketingQuestionList;
+//        }
+//    }
 
 }

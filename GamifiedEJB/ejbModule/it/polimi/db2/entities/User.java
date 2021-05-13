@@ -1,6 +1,7 @@
 package it.polimi.db2.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Table(name = "user", schema = "db2")
 @NamedQuery(name = "User.checkCredentials", query = "SELECT r FROM User r  WHERE r.username = ?1 and r.password = ?2")
 @NamedQuery(name = "User.checkUsername", query = "SELECT r FROM User r  WHERE r.username = ?1")
-@NamedQuery(name = "User.getUserOrderByPoint", query = "SELECT r FROM User r  ORDER BY r.points DESC")
+
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -29,8 +30,6 @@ public class User implements Serializable {
 
 	private int isblocked;
 
-	@OneToOne(fetch = FetchType.EAGER, mappedBy = "user")
-	private Questionnaire questionnaire;
 	// Bidirectional many-to-one association to Mission
 	/*
 	 * Fetch type EAGER allows resorting the relationship list content also in the
@@ -93,4 +92,8 @@ public class User implements Serializable {
 	public void setIsblocked(int isblocked) {
 		this.isblocked = isblocked;
 	}
+
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH,CascadeType.REMOVE})
+	private List<Questionnaire> questionnaires;
+
 }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Marketing Questions page</title>
+</head>
+<body>
+<h1>Section 1:Marketing Questions(Mandatory)</h1>
+<p th:text=" ${errorMsg}"></p>
+<p th:text=" ${session.errorMsg}?${session.errorMsg}"></p>
+
+
+<div>
+    <form action="StatQuestionPage" method="POST">
+        <table>
+            <tr th:each="q: ${marketingQuestions}">
+                <td th:text="${q.questionContent}"></td>
+                <td><input type="text" th:name="'mktq'+${q.id}", th:value="${#session.getAttribute('mkta'+q.id)}?${#session.getAttribute('mkta'+q.id)}"></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Next Page"></td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+
+
+
+</body>
+</html>

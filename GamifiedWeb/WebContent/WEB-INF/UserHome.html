@@ -12,76 +12,31 @@
 
 <body>
 <h1>Welcome to the Gamified application</h1>
-<td th:text="${product.getName()}"></td><br>
-<td th:text="${product.getProductTime()}"></td><br>
-<img width="150px" alt="photo" th:src="*{'data:image/png;base64,'+product.getImageData()}"> <br>
-<p th:text=" ${errorMsg}"></p>
+<p th:text=" ${errorMsg}?${errorMsg}"></p>
 
-<table>
+<p th:text="${productOfDay.getName()}"></p>
+<table th:if="${productOfDay}">
     <tbody>
-	<span th:each="q : ${product.getMarketingQuestion()}">
-		<br><td th:text="${q.getQuestionContent()}"></td> <br>
-		<table>
-			<thead>
-			<tr>
-				<th>User</th>
-				<th>Answer</th>
-			</tr>
-			</thead>
-			<tbody>
-			<tr th:each="a : ${q.getMarketingAnswers()}">
-				<td th:text="${a.getQuestionnaire().getUser().getUsername()}"></td>
-				<td th:text="${a.getAnswer()}"></td>
-			</tr>
-			</tbody>
-		</table>
-	</span>
-</span>
+    <span th:each="mktq : ${productOfDay.getMarketingQuestionsList()}">
+        <tr>
+            <td th:text="${mktq.getQuestionContent()}"></td>
+        </tr>
+        <span th:each="userAnswer : ${mktq.getQuestionnaireMap()}">
+            <tr>
+                <td th:text="${userAnswer.key.getUser().getUsername()}"></td>
+                <td th:text="${userAnswer.value}"></td>
+            </tr>
+        </span>
+    </span>
     </tbody>
 </table>
-<a th:href="@{/Logout}">Logout</a>
-<a th:href="@{/ScoreBoard}">ScoreBoard</a>
+
+<div align="left">
+    <a th:href="@{/MktQuestionPage}">Fill in a Questionnaire</a>
+    <p th:text="${session.errorMsgHome}?${session.errorMsgHome}"></p>
+</div>
+
+
 
 </body>
 </html>
-<!--<table>-->
-<!--    <tbody>-->
-<!--    <span th:each="question : ${product.getMarketingQuestion()}">-->
-<!--        <tr>-->
-<!--            <td th:text="${question.getQuestionContent()}"></td>-->
-<!--        </tr>-->
-<!--        <span th:each="userAnswer : ${question.getMarketingAnswers()}">-->
-<!--            <tr>-->
-<!--                <td th:text="${userAnswer.getQuestionnaire().getUser().getUsername()}"></td>-->
-<!--                <td th:text="${userAnswer.getAnswer()}"></td>-->
-<!--            </tr>-->
-<!--        </span>-->
-<!--    </span>-->
-<!--    </tbody>-->
-<!--</table>-->
-
-<!--        <tr th:each="userAnswer : ${h.userAnswer}">-->
-<!--            <td th:text="${userAnswer.key}"></td>-->
-<!--            <td th:text="${userAnswer.value}"></td>-->
-<!--        </tr>-->
-
-<!--<span th:each="uat : ${h.answerTypeTwo}">-->
-<!--            <tr>-->
-<!--                <td th:text="${uat}"></td>-->
-<!--            </tr>-->
-<!--        </span>-->
-<!--<table>-->
-<!--    <tbody>-->
-<!--    <span th:each="h : ${homePageShowContents}">-->
-<!--        <tr>-->
-<!--            <td th:text="${h.questionContent}"></td>-->
-<!--        </tr>-->
-<!--        <span th:each="userAnswer : ${h.userAnswer}">-->
-<!--            <tr>-->
-<!--                <td th:text="${userAnswer.key}"></td>-->
-<!--                <td th:text="${userAnswer.value}"></td>-->
-<!--            </tr>-->
-<!--        </span>-->
-<!--    </span>-->
-<!--    </tbody>-->
-<!--</table>-->
