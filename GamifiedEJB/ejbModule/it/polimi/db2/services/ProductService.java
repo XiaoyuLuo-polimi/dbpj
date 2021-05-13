@@ -57,7 +57,15 @@ public class ProductService {
             return 0;
         }
     }
-
+    public Product getProductByDate(LocalDate date) throws NoResultException{
+        Product product = null;
+        try {
+            product = em.createNamedQuery("product.getProdByDate", Product.class).setParameter(1, date).getSingleResult();
+        }catch (NoResultException e){
+            return null;
+        }
+        return product;
+    }
 
     public Product getTodayProduct() throws NoResultException{
         Product product = null;
@@ -69,6 +77,5 @@ public class ProductService {
             return null;
         }
         return product;
-
     }
 }
