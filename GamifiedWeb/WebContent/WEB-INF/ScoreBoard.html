@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>RANK</h1>
+
+<p th:text=" ${errorMsg}"></p>
+
+<table>
+    <tbody>
+    <span th:each="user : ${userList}">
+        <tr>
+            <td th:text="${user.getUsername}"></td>
+            <td th:text="${user.getPoints}"></td>
+        </tr>
+    </span>
+    </tbody>
+</table>
+
+
+
+</body>
+</html>
