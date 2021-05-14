@@ -57,6 +57,7 @@ public class ProductService {
             return 0;
         }
     }
+
     public Product getProductByDate(LocalDate date) throws NoResultException{
         Product product = null;
         try {

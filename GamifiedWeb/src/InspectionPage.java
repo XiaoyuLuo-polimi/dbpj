@@ -58,11 +58,11 @@ public class InspectionPage extends HttpServlet {
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
-        if (session.getAttribute("errorMessage") != null){
-            ctx.setVariable("errorMsg", session.getAttribute("errorMessage"));
-            request.getSession().removeAttribute("errorMessage");
+        if (session.getAttribute("errorMsg") != null){
+            ctx.setVariable("errorMsg", session.getAttribute("errorMsg"));
+            request.getSession().removeAttribute("errorMsg");
 
-        }else if (session.getAttribute("date") != null){
+        }else if (session.getAttribute("product") != null){
             ctx.setVariable("submittedQuestionnaireList", session.getAttribute("submittedQuestionnaireList"));
             ctx.setVariable("cancelledQuestionnaireList", session.getAttribute("cancelledQuestionnaireList"));
             ctx.setVariable("product", session.getAttribute("product"));
@@ -105,23 +105,42 @@ public class InspectionPage extends HttpServlet {
         try {
             product = productService.getProductByDate(date);
         }catch(PersistenceException e){
-            request.getSession().setAttribute("errorMessage", e.getMessage());
+            request.getSession().setAttribute("errorMsg", "Wrong date, there not exist a product.");
             response.sendRedirect(pathContext + "/InspectionPage");
             return;
         }
 
-        List<Questionnaire> todayQuestionnaireList = product.getQuestionnaires();
-
-        List<Questionnaire> submittedQuestionnaireList = new ArrayList<>();
-        List<Questionnaire> cancelledQuestionnaireList = new ArrayList<>();
-        for(Questionnaire q:todayQuestionnaireList){
-            if(q.getIsCancelled() == 1){
-                cancelledQuestionnaireList.add(q);
-            }
-            else{
-                submittedQuestionnaireList.add(q);
-            }
+        if(product == null){
+            request.getSession().setAttribute("errorMsg", "Wrong date, there not exist a product.");
+            response.sendRedirect(pathContext + "/InspectionPage");
+            request.getSession().setAttribute("product", product);
         }
+        else{
+            List<Questionnaire> todayQuestionnaireList = new ArrayList<>();
+            try {
+                todayQuestionnaireList = product.getQuestionnaires();
+            }catch(PersistenceException e){
+
+            }
+            List<Questionnaire> submittedQuestionnaireList = new ArrayList<>();
+            List<Questionnaire> cancelledQuestionnaireList = new ArrayList<>();
+
+            for(Questionnaire q:todayQuestionnaireList){
+                if(q.getIsCancelled() == 1){
+                    cancelledQuestionnaireList.add(q);
+                }
+                else{
+                    submittedQuestionnaireList.add(q);
+                }
+            }
+            request.getSession().setAttribute("date", date);
+            request.getSession().setAttribute("submittedQuestionnaireList", submittedQuestionnaireList);
+            request.getSession().setAttribute("cancelledQuestionnaireList", cancelledQuestionnaireList);
+            request.getSession().setAttribute("product", product);
+            response.sendRedirect(pathContext + "/InspectionPage");
+        }
+
+
 
 //
 //        if (submittedQuestionnaireList.isEmpty() && cancelledQuestionnaireList.isEmpty()){
@@ -130,12 +149,7 @@ public class InspectionPage extends HttpServlet {
 //            return;
 //        }
 
-        request.getSession().setAttribute("date", date);
-        request.getSession().setAttribute("submittedQuestionnaireList", submittedQuestionnaireList);
-        request.getSession().setAttribute("cancelledQuestionnaireList", cancelledQuestionnaireList);
-        request.getSession().setAttribute("product", product);
 
-        response.sendRedirect(pathContext + "/InspectionPage");
 
     }
 
