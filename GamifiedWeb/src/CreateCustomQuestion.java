@@ -97,4 +97,10 @@ public class CreateCustomQuestion extends HttpServlet {
         response.sendRedirect(path);
         return;
     }
+
+    public void destroy(){
+
+    }
+
+
 }

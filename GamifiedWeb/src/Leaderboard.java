@@ -18,8 +18,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/ScoreBoard")
-public class ScoreBoard extends HttpServlet {
+@WebServlet("/Leaderboard")
+public class Leaderboard extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
 
@@ -40,7 +40,7 @@ public class ScoreBoard extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Redirect to the Home page and add missions to the parameters
-        String path = "/WEB-INF/ScoreBoard.html";
+        String path = "/WEB-INF/Leaderboard.html";
         ServletContext servletContext = getServletContext();
 
         String loginpath = getServletContext().getContextPath() + "/index.html";
@@ -63,5 +63,9 @@ public class ScoreBoard extends HttpServlet {
         ctx.setVariable("userList", userList);
         //ctx.setVariable("homePageShowContents", homePageShowContents);
         templateEngine.process(path, ctx, response.getWriter());
+    }
+
+    public void destroy(){
+
     }
 }

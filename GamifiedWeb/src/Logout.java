@@ -31,4 +31,8 @@ public class Logout extends HttpServlet {
 		doGet(request, response);
 	}
 
+	public void destroy(){
+
+	}
+
 }

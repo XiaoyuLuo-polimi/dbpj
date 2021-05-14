@@ -3,16 +3,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Leaderboard</title>
 </head>
 <body>
 
-<h1>RANK</h1>
+<h1>Rank List</h1>
 
 <p th:text=" ${errorMsg}"></p>
 
 <table>
     <tbody>
+    <tr>
+        <th>Username</th>
+        <th>Points</th>
+    </tr>
     <span th:each="user : ${userList}">
         <tr>
             <td th:text="${user.getUsername}"></td>
@@ -20,8 +24,10 @@
         </tr>
     </span>
     </tbody>
-    <a th:href="@{/AdminHome}">Finish and return to Home page</a>
+<!--    <a th:href="@{/AdminHome}">Finish and return to Home page</a>-->
 </table>
+<p></p>
+<a th:href="@{/UserHome}">Back to home page</a>
 
 
 

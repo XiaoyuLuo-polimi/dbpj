@@ -1139,7 +1139,7 @@ mkt_question_id</ColNames>
       <Events>I</Events>
     </trigger>
     <trigger id="335" parent="289" name="add_points_section2">
-      <SourceTextLength>426</SourceTextLength>
+      <SourceTextLength>402</SourceTextLength>
       <Definer>root@%</Definer>
       <Turn>after-row</Turn>
       <Events>I</Events>
@@ -1151,7 +1151,7 @@ mkt_question_id</ColNames>
       <Events>U</Events>
     </trigger>
     <trigger id="337" parent="289" name="qndeletion">
-      <SourceTextLength>744</SourceTextLength>
+      <SourceTextLength>711</SourceTextLength>
       <Definer>root@%</Definer>
       <Turn>after-row</Turn>
       <Events>U</Events>

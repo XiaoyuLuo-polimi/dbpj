@@ -51,34 +51,37 @@ public class Register extends HttpServlet {
         pwd2 = StringEscapeUtils.escapeJava(request.getParameter("pwd2"));
         email = StringEscapeUtils.escapeJava(request.getParameter("email"));
 
-        ServletContext servletContext = getServletContext();
-        final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        String path = "/Register.html";
+        String errorMsg = null;
 
         if (usrn.length() == 0 || pwd1.length() == 0 || pwd2.length() == 0 || email.length() == 0) {
-            ctx.setVariable("errorMsg", "Required field missing.");
-            templateEngine.process(path, ctx, response.getWriter());
+            errorMsg = "Required field missing.";
         }else if(!pwd1.equals(pwd2)){
-            ctx.setVariable("errorMsg", "The two passwords you entered were inconsistent.");
-            templateEngine.process(path, ctx, response.getWriter());
+            errorMsg = "The two passwords you entered were inconsistent.";
         }else{
             try{
                 usrService.registerNewUser(usrn,pwd1,email);
             } catch (InvalidInsert invalidInsert) {
-                ctx.setVariable("errorMsg", "The username has already existed.");
-                templateEngine.process(path, ctx, response.getWriter());
+                errorMsg = "The username has already existed.";
             } catch (InvalidFormat invalidFormat){
-                ctx.setVariable("errorMsg", "The format of email is incorrect.");
-                templateEngine.process(path, ctx, response.getWriter());
+                errorMsg = "The format of email is incorrect.";
             }
-            path="/index.html";
-            request.getSession().setAttribute("new_username",usrn);
-            templateEngine.process(path, ctx, response.getWriter());
         }
 
+        ServletContext servletContext = getServletContext();
+        final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+        String path = null;
+        if(errorMsg!=null){
+            path = "/Register.html";
+            ctx.setVariable("errorMsg", errorMsg);
+        }else{
+            path = "/index.html";
+            ctx.setVariable("errorMsg","Succeed in registration.");
+        }
+        templateEngine.process(path, ctx, response.getWriter());
 
+    }
 
-
+    public void destroy(){
 
     }
 

@@ -81,7 +81,6 @@ public class SubmitQuestionnaire extends HttpServlet {
         try {
             pId = pService.getTodayProductId();
         } catch (NoResultException noResultException) {
-            //noResultException.printStackTrace();
             pId = -1;
         }
 
@@ -108,13 +107,16 @@ public class SubmitQuestionnaire extends HttpServlet {
                 }
 
                 try{
-                    if(gender == "Male"){
+                    if(gender.equals("Male")){
                         new_gender="m";
-                    }else if(gender == "Female"){
+                    }else if(gender.equals("Female")){
                         new_gender="f";
                     }else{
                         new_gender="0";
                     }
+
+                    System.out.println(gender.equals("Male"));
+                    System.out.println(new_gender);
 
                     if(expLevel.length() == 0){
                         expLevel="0";
@@ -134,6 +136,7 @@ public class SubmitQuestionnaire extends HttpServlet {
                     response.sendRedirect(path);
 
                 }catch(OffensiveWordsInsert exception){
+//                    System.out.println("******************"+uId);
                     uService.blockUserById(uId);
                     System.out.println("OffensiveWordsInsert,blocked.");
                     request.getSession().setAttribute("errorMsgHome","Attention: Your account is blocked, since the system detected the offsensive words in the answers.");
@@ -153,20 +156,19 @@ public class SubmitQuestionnaire extends HttpServlet {
                     response.sendRedirect(path);
                 }
             }
-
         }else if (StringEscapeUtils.escapeJava(request.getParameter("complete")).equals("Cancel")){
             try{
                 qnService.cancelAQuestionnaire(uId,pId,time);
+                request.getSession().setAttribute("errorMsgHome","You cancel the questionnaire successfully.");
+                String path = null;
+                path = getServletContext().getContextPath() + "/UserHome";
+                response.sendRedirect(path);
             }catch( HasBeenBlocked hasBeenBlocked){
                 request.getSession().setAttribute("errorMsgHome","Attention: Your account is blocked.");
                 String path = null;
                 path = getServletContext().getContextPath() + "/UserHome";
                 response.sendRedirect(path);
             }
-            request.getSession().setAttribute("errorMsgHome","You cancel the questionnaire successfully.");
-            String path = null;
-            path = getServletContext().getContextPath() + "/UserHome";
-            response.sendRedirect(path);
         }
 
     }

@@ -55,4 +55,7 @@ public class Administrator implements Serializable{
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @OneToMany(mappedBy = "administrator",fetch = FetchType.LAZY)
+    private List<Product> products;
 }

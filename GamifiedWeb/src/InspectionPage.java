@@ -153,4 +153,8 @@ public class InspectionPage extends HttpServlet {
 
     }
 
+    public void destroy(){
+
+    }
+
 }

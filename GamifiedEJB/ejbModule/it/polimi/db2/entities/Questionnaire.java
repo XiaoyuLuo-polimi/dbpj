@@ -10,8 +10,8 @@ import java.util.Map;
 @Entity
 @Table(name = "questionnaire", schema = "db2")
 @NamedQuery(name = "questionnaire.getQuesById", query = "SELECT r FROM Questionnaire r  WHERE r.productId = ?1")
-@NamedQuery(name = "questionnaire.getQuesByUserId", query = "SELECT r FROM Questionnaire r  WHERE r.userId = ?1 and r.createTime >= ?2")
-@NamedQuery(name = "questionnaire.getAllquestionnaire", query = "SELECT r FROM Questionnaire r WHERE r.isCancelled = 0 and r.adminId = 0")
+@NamedQuery(name = "questionnaire.getQuesByUserId", query = "SELECT r FROM Questionnaire r  WHERE r.userId = ?1 and r.productId = ?2 and r.isCancelled=0")
+
 public class Questionnaire implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -170,6 +170,8 @@ public class Questionnaire implements Serializable {
 
 
     @ManyToMany
+    //joinColumns指定中间表中关联自己ID的字段，inverseJoinColumns表示中间表中关联对方ID的字段，joinColumn是列名;
+    //referencedColumnName is the key of associated table.
     @JoinTable(name="marketing_answer",
             joinColumns = @JoinColumn(name = "questionnaire_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "mkt_question_id", referencedColumnName = "id"))

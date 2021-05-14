@@ -64,8 +64,6 @@ public class MarketingQuestion implements Serializable{
 
 
     @ManyToMany(mappedBy = "marketingQuestions")
-//    @JoinTable(name="marketing_answer",joinColumns = @JoinColumn(name = "mkt_question_id"),
-//            inverseJoinColumns = @JoinColumn(name = "questionnaire_id"))
     private List<Questionnaire> questionnaires;
 
     public List<Questionnaire> getQuestionnaires() {

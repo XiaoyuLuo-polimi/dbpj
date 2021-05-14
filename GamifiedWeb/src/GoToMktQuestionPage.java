@@ -54,9 +54,14 @@ public class GoToMktQuestionPage extends HttpServlet{
             response.sendRedirect(loginpath);
             return;
         }
+
         Product product=productService.getTodayProduct();
-        List<MarketingQuestion> mktQuestions=null;
-        mktQuestions = product.getMarketingQuestionsList();
+        List<MarketingQuestion> mktQuestions = null;
+        if(product != null) {
+            mktQuestions = product.getMarketingQuestionsList();
+        }else{
+            mktQuestions = null;
+        }
 
         if (mktQuestions == null) {
             final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
