@@ -8,7 +8,6 @@
 		<jta-data-source>GamifiedDB</jta-data-source>
 		<class>it.polimi.db2.entities.User</class>
 		<class>it.polimi.db2.entities.Administrator</class>
-		<class>it.polimi.db2.entities.MarketingAnswer</class>
 		<class>it.polimi.db2.entities.MarketingQuestion</class>
 		<class>it.polimi.db2.entities.MktqOfProduct</class>
 		<class>it.polimi.db2.entities.OffensiveWord</class>

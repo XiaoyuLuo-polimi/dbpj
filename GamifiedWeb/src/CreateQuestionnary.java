@@ -130,6 +130,11 @@ public class CreateQuestionnary extends HttpServlet {
             response.sendRedirect(loginpath);return;
         }
 
+    }
+
+    public void destroy(){
 
     }
+
+
 }

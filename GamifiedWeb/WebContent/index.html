@@ -2,30 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Login page</title>
+	<title>Login Page</title>
 </head>
 <body>
-<h1>User</h1>
+<h1>Welcome to the Gamified Marketing application</h1>
 
 <form action="CheckLogin" method="POST">
-	Username: <input type="text" name="username" th:href="${session.new_username}?${session.new_username}" required> <br>
+	Username: <input type="text" name="username" required> <br>
 	Password: <input type="password" name="pwd" required><br>
 	<table>
 		<tr>
 			<td>
 				<input type="submit" value="login">
 			</td>
+			<td></td>
 			<td>
 				<a href="Register.html">Register</a>
 			</td>
+			<td></td>
 			<td>
 				<a href="AdminIndex.html">ADMIN</a>
 			</td>
 		</tr>
 	</table>
 </form>
+
 <form action="AdminCheckLogin" method="GET">
-	<input type="submit" value="Go To Admin Page">
+	<input type="submit" value="Go to admin page">
 </form>
+
+<p th:text=" ${errorMsg}?${errorMsg}"></p>
 </body>
 </html>

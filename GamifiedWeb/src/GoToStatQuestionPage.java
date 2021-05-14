@@ -74,14 +74,14 @@ public class GoToStatQuestionPage extends HttpServlet {
 
 
             if (QuestionAnsweredNum == mktQuestions.size()) {
-                System.out.println("###################"+product.getName());
+//                System.out.println("###################"+product.getName());
                 Map<MarketingQuestion,String> questionAnswerMap = new HashMap<>();
 
                 //put Marketing Question and the corresponding answer into the Map.
                 for(MarketingQuestion marketingQuestion: product.getMarketingQuestionsList()){
-                    System.out.println(String.valueOf(marketingQuestion.getId()));
+//                    System.out.println(String.valueOf(marketingQuestion.getId()));
                     mktAnswer = StringEscapeUtils.escapeJava(request.getParameter("mktq" + String.valueOf(marketingQuestion.getId())));
-                    System.out.println(mktAnswer);
+//                    System.out.println(mktAnswer);
                     questionAnswerMap.put(marketingQuestion,mktAnswer);
                 }
                 request.getSession().setAttribute("mktqaMap",questionAnswerMap);

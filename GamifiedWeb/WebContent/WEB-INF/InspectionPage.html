@@ -22,14 +22,14 @@
 <br>
 <hr />
 <br>
-<div th:if="${submittedQuestionnaireList == null || submittedQuestionnaireList.isEmpty()}">
+<div th:if="${submittedQuestionnaireList eq null}">
     <span>No user submitted!</span>
 </div>
-<div th:if="${!submittedQuestionnaireList.isEmpty()}">
+<div th:if="${submittedQuestionnaireList}">
     <td>List of users who submitted the questionnaire:</td> <br>
     <span th:each="su : ${submittedQuestionnaireList}">
 		<ul>
-			<li th:text="${su.getUsername()}"></li>
+			<li th:text="${su.getUser().getUsername()}"></li>
 		</ul>
 	</span>
 </div>
@@ -38,11 +38,11 @@
 
 <td>List of users who cancelled the questionnaire:</td> <br>
 
-<div th:if="${cancelledQuestionnaireList == null || cancelledQuestionnaireList.isEmpty()}">
+<div th:if="${cancelledQuestionnaireList eq null}">
     <span>No user cancelled!</span>
 </div>
 
-<div th:if="${!cancelledQuestionnaireList.isEmpty()}">
+<div th:if="${!cancelledQuestionnaireList}">
 	<span th:each="cu : ${cancelledQuestionnaireList}">
 		<ul>
 			<li th:text="${cu.getUser().getUsername()}"></li>
@@ -59,7 +59,7 @@
     <span>No user submitted!</span>
 </div>
 
-<div th:if="${!submittedQuestionnaireList.isEmpty()}">
+<div th:if="${submittedQuestionnaireList}">
 	<span th:each="su : ${submittedQuestionnaireList}">
 		<ul>
 			<li th:text="${su.getUser().getUsername()}"></li> <br>

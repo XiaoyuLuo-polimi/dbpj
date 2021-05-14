@@ -60,4 +60,9 @@ public class GoUserHomePage extends HttpServlet {
         templateEngine.process(path, ctx, response.getWriter());
 
     }
+
+
+    public void destroy(){
+
+    }
 }

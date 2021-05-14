@@ -24,34 +24,16 @@ public class QuestionnaireService {
 
     public QuestionnaireService() {
     }
-    public boolean validateIsAlreadySubmitQuestionnaire() throws NoResultException{
-        Questionnaire questionnaire = null;
-
-        int pdId = prjService.getTodayProductId();
-        try{
-            questionnaire = em.createNamedQuery("questionnaire.getQuesById", Questionnaire.class).setParameter(1, pdId).getSingleResult();
-        }catch(NoResultException noResultException){
-            questionnaire = null;
-        }
-
-        if(pdId!=0 && questionnaire != null){
-            return true;
-        }
-        else if(pdId==0){
-            return false;
-        }
-        return true;
-    }
 
     public Questionnaire getQuestionnaireById(int id){
         Questionnaire questionnaire = em.find(Questionnaire.class,id);
         return questionnaire;
     }
 
-    public Questionnaire getQuestionnaireByUserId(int uId, LocalDateTime dateTime) throws NoResultException {
+    public Questionnaire getQuestionnaireByUserId(int uId, int pId) throws NoResultException {
         Questionnaire questionnaire=null;
         try{
-            questionnaire = em.createNamedQuery("questionnaire.getQuesByUserId", Questionnaire.class).setParameter(1, uId).setParameter(2,dateTime).getSingleResult();
+            questionnaire = em.createNamedQuery("questionnaire.getQuesByUserId", Questionnaire.class).setParameter(1, uId).setParameter(2,pId).getSingleResult();
         }catch(NoResultException noResultException){
             questionnaire=null;
         }
@@ -69,7 +51,7 @@ public class QuestionnaireService {
         DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime new_time=LocalDateTime.parse(strtime,dtf2);
 
-        Questionnaire qn=getQuestionnaireByUserId(userId,new_time);
+        Questionnaire qn=getQuestionnaireByUserId(userId,pId);
         if(qn == null) {
             Questionnaire questionnaire = new Questionnaire();
 //            System.out.println("############## function" + userId + "," + pId + "," + age + "," + sex + "," + expLevel + "," + dateTime+","+mktqaMap);

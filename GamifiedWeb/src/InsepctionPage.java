@@ -140,4 +140,8 @@ public class InsepctionPage extends HttpServlet {
 
     }
 
+    public void destroy(){
+
+    }
+
 }
