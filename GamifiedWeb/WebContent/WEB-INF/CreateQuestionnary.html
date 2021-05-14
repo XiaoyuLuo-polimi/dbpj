@@ -14,6 +14,9 @@
             Product name: <input type="text"  name="productName"  required>
         </p>
         <input type="submit" name="Product">
+        <div align="left">
+            <a th:href = "@{/AdminHome}" >Return to admin homepage</a> <br>
+        </div>
         <p th:text=" ${errorMsg}"></p>
     </fieldset>
 </form>

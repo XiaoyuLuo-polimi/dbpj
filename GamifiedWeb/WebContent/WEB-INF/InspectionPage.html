@@ -7,14 +7,13 @@
 <body>
 
 <div align="right">
-    <a th:href = "@{/AdminHomePage}" >Admin Home Page</a> <br>
+    <a th:href = "@{/AdminHome}" >Admin Home Page</a> <br>
 </div>
 
 
-<form action="#" th:action="@{/AdminInspectionPage}" method="POST">
+<form action="#" th:action="@{/InspectionPage}" method="POST">
     <fieldset>
         Date: <input type="date" name="Date" required><br>
-
         <input type="submit" value="Submit">
     </fieldset>
 </form>
@@ -22,7 +21,7 @@
 <br>
 <hr />
 <br>
-<div th:if="${submittedQuestionnaireList eq null}">
+<div th:if="${submittedQuestionnaireList == null}">
     <span>No user submitted!</span>
 </div>
 <div th:if="${submittedQuestionnaireList}">
@@ -38,11 +37,11 @@
 
 <td>List of users who cancelled the questionnaire:</td> <br>
 
-<div th:if="${cancelledQuestionnaireList eq null}">
+<div th:if="${cancelledQuestionnaireList == null}">
     <span>No user cancelled!</span>
 </div>
 
-<div th:if="${!cancelledQuestionnaireList}">
+<div th:if="${cancelledQuestionnaireList}">
 	<span th:each="cu : ${cancelledQuestionnaireList}">
 		<ul>
 			<li th:text="${cu.getUser().getUsername()}"></li>
@@ -55,23 +54,21 @@
 
 <td >Questionnaire answers of each user:</td><br>
 
-<div th:if="${submittedQuestionnaireList == null || submittedQuestionnaireList.isEmpty()}">
+<div th:if="${submittedQuestionnaireList == null}">
     <span>No user submitted!</span>
 </div>
 
-<div th:if="${submittedQuestionnaireList}">
-	<span th:each="su : ${submittedQuestionnaireList}">
-		<ul>
-			<li th:text="${su.getUser().getUsername()}"></li> <br>
+<li th:text="${product.getName()}"> </li>
 
-			<span th:each="subq : ${submittedQuestionnaireList}">
+<div th:if="${submittedQuestionnaireList}">
+	<span th:each="subq : ${submittedQuestionnaireList}">
+		<ul>
+			<li th:text="${subq.getUser().getUsername()}"></li> <br>
 <!--				<div th:if="${(#dates.format(uq.getDatetime(), 'dd-MMM-yyyy') == #dates.format(date, 'dd-MMM-yyyy'))-->
 <!--								&& !uq.getQuestionAnswerMap().isEmpty()}">-->
-					<ul style="list-style-type:square">
-						<li th:text="${product.getName()}"> </li>
 							<span th:each="qa : ${subq.getMarketingAnswerMap()}">
-								<td th:text="${qa.key.getQuestion()}"></td>
-								<span>  ->  </span>
+								<td th:text="${qa.key.getQuestionContent()}"></td>
+
 								<td th:text="${qa.value}"></td><br>
 							</span>
 

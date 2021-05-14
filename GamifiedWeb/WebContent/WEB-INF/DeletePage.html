@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>DELETION PAGE</title>
+</head>
+<body>
+
+
+<table>
+  <thead>
+  <tr>
+    <th>User</th>
+    <th>Product</th>
+    <th>Datetime</th>
+    <th>Age</th>
+    <th>Sex</th>
+    <th>ExpertiseLevel</th>
+    <th>Operation</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="q : ${submittedQuestionnaireList}">
+    <td th:text="${q.getUser().getUsername()}"></td>
+    <td th:text="${q.getProduct().getName() }"></td>
+    <td th:text="${q.getCreateTime()}"></td>
+    <td th:text="${q.getAge() }"></td>
+    <td th:text="${q.getSex() }"></td>
+    <td th:text="${q.getExpertiseLevel() }"></td>
+      <td><a th:href="@{/DeleteQuestionnaire(questionnaireID=${q.getId()})}">Delete</a></td>
+    </div>
+
+  </tr>
+  </tbody>
+</table>
+
+<div align="left">
+  <a th:href = "@{/AdminHome}" >Return to admin homepage</a> <br>
+</div>
+
+<p th:text=" ${errorMsg}"></p>
+
+</body>
+</html>

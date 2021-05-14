@@ -23,8 +23,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/InsepctionPage")
-public class InsepctionPage extends HttpServlet {
+@WebServlet("/InspectionPage")
+public class InspectionPage extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
 
@@ -46,8 +46,6 @@ public class InsepctionPage extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-
         // If admin user is not logged in (not present in session) redirect to the login
         String pathContext = getServletContext().getContextPath();
         HttpSession session = request.getSession();
@@ -63,14 +61,16 @@ public class InsepctionPage extends HttpServlet {
         if (session.getAttribute("errorMessage") != null){
             ctx.setVariable("errorMsg", session.getAttribute("errorMessage"));
             request.getSession().removeAttribute("errorMessage");
-        }else if (session.getAttribute("date") != null){
 
+        }else if (session.getAttribute("date") != null){
             ctx.setVariable("submittedQuestionnaireList", session.getAttribute("submittedQuestionnaireList"));
             ctx.setVariable("cancelledQuestionnaireList", session.getAttribute("cancelledQuestionnaireList"));
+            ctx.setVariable("product", session.getAttribute("product"));
             ctx.setVariable("date", session.getAttribute("date"));
 
             request.getSession().removeAttribute("submittedQuestionnaireList");
             request.getSession().removeAttribute("cancelledQuestionnaireList");
+            request.getSession().removeAttribute("product");
             request.getSession().removeAttribute("date");
         }
 
@@ -84,8 +84,8 @@ public class InsepctionPage extends HttpServlet {
         // If admin user is not logged in (not present in session) redirect to the login
         String pathContext = getServletContext().getContextPath();
         HttpSession session = request.getSession();
-        if (session.isNew() || session.getAttribute("admin") == null) {
-            response.sendRedirect(pathContext+ "/AdminLogin.html");
+        if (session.isNew() || session.getAttribute("administrator") == null) {
+            response.sendRedirect(pathContext+ "/AdminIndex.html");
             return;
         }
 
@@ -114,7 +114,6 @@ public class InsepctionPage extends HttpServlet {
 
         List<Questionnaire> submittedQuestionnaireList = new ArrayList<>();
         List<Questionnaire> cancelledQuestionnaireList = new ArrayList<>();
-
         for(Questionnaire q:todayQuestionnaireList){
             if(q.getIsCancelled() == 1){
                 cancelledQuestionnaireList.add(q);
