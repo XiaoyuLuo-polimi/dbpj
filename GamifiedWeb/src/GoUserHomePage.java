@@ -51,7 +51,7 @@ public class GoUserHomePage extends HttpServlet {
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
         if(product==null){
-            ctx.setVariable("errorMsg", "No product of day");
+            ctx.setVariable("errorMsg", "No product of today");
         }else{
             System.out.println("Product Of the day: "+product.getName()+", the number of marketing questions: "+product.getMarketingQuestionsList().size());
             ctx.setVariable("productOfDay", product);

@@ -60,7 +60,11 @@ public class GoToStatQuestionPage extends HttpServlet {
         Product product= (Product) request.getSession().getAttribute("product");
 
         List<MarketingQuestion> mktQuestions = null;
-        mktQuestions = product.getMarketingQuestionsList();
+        if(product != null) {
+            mktQuestions = product.getMarketingQuestionsList();
+        }else{
+            mktQuestions = null;
+        }
 
         if (mktQuestions != null) {
             String mktAnswer = null;
