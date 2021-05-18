@@ -16,30 +16,23 @@ public class ProductService {
 
     public ProductService() {
     }
-    public void setNewProduct(String name , int adminId, byte[] imagePath) throws InvalidInsert{
+    public void setNewProduct(String name , int adminId, byte[] imagePath) throws Exception{
         Product product = new Product();
 
-        LocalDate date  = LocalDate.now();;
-//        //设置日期格式
-//        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
-//        //获取string类型日期
-//        String today=dateFormat.format(date);
+        LocalDate date  = LocalDate.now();
+        try{
+        product.setProductDate(date);
+        product.setAdminId(adminId);
+        product.setName(name);
+        product.setImage(imagePath);
 
-        product = em.createNamedQuery("product.getProdByDate", Product.class).setParameter(1, date).getSingleResult();
-
-        if(product != null){
-            throw new InvalidInsert("Today already exist product");
+        this.em.persist(product);
+        this.em.flush();
         }
-        else{
-            product.setProductDate(date);
-            product.setAdminId(adminId);
-            product.setName(name);
-            product.setImage(imagePath);
-
-            this.em.persist(product);
-            this.em.flush();
-
+        catch(Exception e){
+            return;
         }
+
     }
     public int getTodayProductId() throws NoResultException{
         Product product = null;

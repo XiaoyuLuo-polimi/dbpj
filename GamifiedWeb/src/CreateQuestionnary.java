@@ -111,7 +111,7 @@ public class CreateQuestionnary extends HttpServlet {
             try {
                 productService.setNewProduct(productName, admin.getId(), bytesImage);
             } catch (Exception e) {
-                String loginpath = getServletContext().getContextPath() + "/AdminHome?errorMsg=Already have product today, can not create new one";
+                String loginpath = getServletContext().getContextPath() + "/AdminHome?errorMsg=Invalid new product error, pleas check DB connection";
                 response.sendRedirect(loginpath);
                 return;
             }
@@ -126,7 +126,7 @@ public class CreateQuestionnary extends HttpServlet {
 //            path = "/AdminHome.html";
 //            templateEngine.process(path, ctx, response.getWriter());
 //            return;
-            String loginpath = getServletContext().getContextPath() + "/AdminHome?errorMsg='wrong'";
+            String loginpath = getServletContext().getContextPath() + "/AdminHome?errorMsg=Already have product today, can not create new one";
             response.sendRedirect(loginpath);return;
         }
 

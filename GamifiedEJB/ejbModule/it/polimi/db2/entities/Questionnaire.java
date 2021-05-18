@@ -11,7 +11,7 @@ import java.util.Map;
 @Table(name = "questionnaire", schema = "db2")
 @NamedQuery(name = "questionnaire.getQuesById", query = "SELECT r FROM Questionnaire r  WHERE r.productId = ?1")
 @NamedQuery(name = "questionnaire.getQuesByUserId", query = "SELECT r FROM Questionnaire r  WHERE r.userId = ?1 and r.productId = ?2 and r.isCancelled=0")
-
+@NamedQuery(name = "questionnaire.getAllquestionnaire", query = "SELECT r FROM Questionnaire r  WHERE r.isCancelled=0 and r.adminId=0")
 public class Questionnaire implements Serializable {
     private static final long serialVersionUID = 1L;
 
