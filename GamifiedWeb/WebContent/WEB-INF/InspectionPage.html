@@ -57,8 +57,9 @@
 <div th:if="${submittedQuestionnaireList == null}">
     <span>No Data</span>
 </div>
-
+<div th:if="${product}">
 <li th:text="${product.getName()}"> </li>
+</div>
 
 <div th:if="${product.getName() == null}">
 	<span>There are no product in this day, please choose another date.</span>
