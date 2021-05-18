@@ -16,6 +16,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @MultipartConfig
 @WebServlet("/CreateQuestionnary")
@@ -61,9 +63,22 @@ public class CreateQuestionnary extends HttpServlet {
             return;
         }
 
+        String strDate;
+        try {
+            strDate = StringEscapeUtils.escapeJava(request.getParameter("date"));
+            if (strDate == null) {
+                throw new Exception("No empty filed!");
+            }
+        }catch (Exception e){
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+            return;
+        }
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(strDate, fmt);
+
         int productId = 0;
         try {
-            productId = productService.getTodayProductId();
+            productId = productService.isExistProductInThatDate(date);
         } catch (Exception e) {
            // response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "There are no product today");
         }
@@ -73,16 +88,22 @@ public class CreateQuestionnary extends HttpServlet {
         Part filePart = null;
         InputStream imageStream = null;
 
+        LocalDate todayDate  = LocalDate.now();
+
+        if(todayDate.compareTo(date)>0){
+            String adminHomePage = getServletContext().getContextPath() + "/AdminHome?errorMsg=You cannot insert a product of the day preceding the current day";
+            response.sendRedirect(adminHomePage);
+            return;
+        }
+
         response.setContentType("multipart/form-data;charset=utf-8");
         try {
             productName = StringEscapeUtils.escapeJava(request.getParameter("productName"));
             filePart = request.getPart("image");
             String contentType = filePart.getContentType();
             imageStream = filePart.getInputStream();
-
             if (productName == null || productName.isEmpty() ||
                     contentType == null || imageStream.available()<=0) {
-
                 String adminHomePage = getServletContext().getContextPath() + "/AdminHome?errorMsg=The product file can not be empty or wrong format";
                 response.sendRedirect(adminHomePage);
                 return;
@@ -117,7 +138,7 @@ public class CreateQuestionnary extends HttpServlet {
 
         if(productId == 0) {
             try {
-                productService.setNewProduct(productName, admin.getId(), bytesImage);
+                productService.setNewProductAfterYesterday(productName, admin.getId(), bytesImage,date);
             } catch (DuplicateInsertion e) {
                 String loginpath = getServletContext().getContextPath() + "/AdminHome?errorMsg=Already have product today, cannot create new one";
                 response.sendRedirect(loginpath);
@@ -138,7 +159,7 @@ public class CreateQuestionnary extends HttpServlet {
 //            path = "/AdminHome.html";
 //            templateEngine.process(path, ctx, response.getWriter());
 //            return;
-            String loginpath = getServletContext().getContextPath() + "/AdminHome?errorMsg='wrong'";
+            String loginpath = getServletContext().getContextPath() + "/AdminHome?errorMsg=Already Exist prod in that date!";
             response.sendRedirect(loginpath);return;
         }
 

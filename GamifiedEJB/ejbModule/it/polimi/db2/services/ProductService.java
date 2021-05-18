@@ -17,10 +17,8 @@ public class ProductService {
 
     public ProductService() {
     }
-    public void setNewProduct(String name , int adminId, byte[] imagePath) throws InvalidInsert, DuplicateInsertion {
+    public void setNewProductAfterYesterday(String name , int adminId, byte[] imagePath, LocalDate date) throws InvalidInsert, DuplicateInsertion {
         Product product = new Product();
-
-        LocalDate date  = LocalDate.now();;
 //        //设置日期格式
 //        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
 //        //获取string类型日期
@@ -54,6 +52,23 @@ public class ProductService {
 
         }
     }
+    public int isExistProductInThatDate(LocalDate date) throws NoResultException{
+        Product product = null;
+
+        try {
+            product = em.createNamedQuery("product.getProdByDate", Product.class).setParameter(1, date).getSingleResult();
+        }catch (NoResultException e){
+            return 0;
+        }
+
+        if(product != null){
+            return product.getId();
+        }else{
+            return 0;
+        }
+    }
+
+
 
     public int getTodayProductId() throws NoResultException{
         Product product = null;
