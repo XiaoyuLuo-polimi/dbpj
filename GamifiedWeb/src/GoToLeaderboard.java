@@ -61,7 +61,6 @@ public class GoToLeaderboard extends HttpServlet {
         }
 
         ctx.setVariable("userList", userList);
-        //ctx.setVariable("homePageShowContents", homePageShowContents);
         templateEngine.process(path, ctx, response.getWriter());
     }
 

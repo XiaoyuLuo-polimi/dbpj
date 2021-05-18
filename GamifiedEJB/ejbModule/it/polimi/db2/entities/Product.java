@@ -74,7 +74,8 @@ public class Product implements Serializable {
         return Base64.getMimeEncoder().encodeToString(image);
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
     private List<Questionnaire> questionnaires;
 
     public List<Questionnaire> getQuestionnaires() {

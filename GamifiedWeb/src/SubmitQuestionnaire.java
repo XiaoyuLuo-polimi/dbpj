@@ -75,8 +75,6 @@ public class SubmitQuestionnaire extends HttpServlet {
         expLevel=StringEscapeUtils.escapeJava(request.getParameter("expLevel"));
         request.getSession().setAttribute("expLevel",expLevel);
 
-//        System.out.println("submit***********************"+StringEscapeUtils.escapeJava(request.getParameter("complete")).equals("Submit"));
-
         int pId= 0;
         try {
             pId = pService.getTodayProductId();
@@ -94,11 +92,11 @@ public class SubmitQuestionnaire extends HttpServlet {
             String path = getServletContext().getContextPath() + "/MktQuestionPage";
             response.sendRedirect(path);
         }else if (StringEscapeUtils.escapeJava(request.getParameter("complete")).equals("Submit")){
-            System.out.println("#############submit1###############");
+//            System.out.println("#############submit1###############");
             String mktAnswer = null;
             String new_gender = null;
 
-            System.out.println("#############submit2###############");
+//            System.out.println("#############submit2###############");
 
             if(pId>0){
                 int int_age=0;
