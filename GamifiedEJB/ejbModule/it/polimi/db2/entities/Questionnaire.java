@@ -10,7 +10,7 @@ import java.util.Map;
 @Entity
 @Table(name = "questionnaire", schema = "db2")
 @NamedQuery(name = "questionnaire.getQuesByUserId", query = "SELECT r FROM Questionnaire r  WHERE r.user.id = ?1 and r.product.id= ?2 and r.isCancelled=0")
-@NamedQuery(name = "questionnaire.getAllquestionnaire", query = "SELECT r FROM Questionnaire r  WHERE r.isCancelled=0 and (r.administrator.id=0 or r.administrator.id=null)")
+@NamedQuery(name = "questionnaire.getAllquestionnaire", query = "SELECT r FROM Questionnaire r  WHERE r.isCancelled=0 and r.administrator.id=null")
 public class Questionnaire implements Serializable {
     private static final long serialVersionUID = 1L;
 

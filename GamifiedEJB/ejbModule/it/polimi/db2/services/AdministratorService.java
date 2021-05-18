@@ -8,9 +8,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.NonUniqueResultException;
 
 import it.polimi.db2.entities.Administrator;
-import it.polimi.db2.exceptions.UpdateProfileException;
-import it.polimi.db2.entities.User;
-import it.polimi.db2.exceptions.*;
+
 import java.util.List;
 @Stateless
 public class AdministratorService {

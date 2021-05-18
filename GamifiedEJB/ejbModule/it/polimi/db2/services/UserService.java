@@ -3,10 +3,8 @@ package it.polimi.db2.services;
 import javax.ejb.Stateless;
 import javax.persistence.*;
 
-import it.polimi.db2.exceptions.UpdateProfileException;
 import it.polimi.db2.entities.User;
 import it.polimi.db2.exceptions.*;
-import org.eclipse.persistence.exceptions.DatabaseException;
 
 import java.util.ArrayList;
 import java.util.List;

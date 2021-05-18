@@ -19,8 +19,8 @@
 <h2 th:text="'Hello! '+${session.user.getUsername()}"></h2>
 <h1>Welcome to the Gamified Marketing Home Page</h1>
 <p th:text=" ${errorMsg}?${errorMsg}"></p>
-<img width="150px" alt="photo" th:src="*{'data:image/png;base64,'+productOfDay.getImageData()}"> <br>
 <table th:if="${productOfDay}">
+    <img width="150px" alt="photo" th:src="*{'data:image/png;base64,'+productOfDay.getImageData()}"> <br>
     <p th:text="'Product of the day: '+${productOfDay.getName()}"></p>
     <tbody>
     <span th:each="mktq : ${productOfDay.getMarketingQuestionsList()}">

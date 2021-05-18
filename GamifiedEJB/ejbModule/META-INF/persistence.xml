@@ -22,7 +22,7 @@
         <properties>
 			<property name="eclipselink.logging.level" value="FINE" />
             <property name="eclipselink.jdbc.url"
-                      value="jdbc:mysql://ec2-18-179-43-16.ap-northeast-1.compute.amazonaws.com:3306/db2"/>
+                      value="jdbc:mysql://127.0.0.1:3306/db2?serverTimezone=GMT%2B8"/>
             <property name="eclipselink.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
         </properties>
 	</persistence-unit>
