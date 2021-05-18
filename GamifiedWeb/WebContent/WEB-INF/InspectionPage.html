@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<div align="right">
+<div align="left">
     <a th:href = "@{/AdminHome}" >Admin Home Page</a> <br>
 </div>
 
@@ -22,10 +22,10 @@
 <hr />
 <br>
 <div th:if="${submittedQuestionnaireList == null}">
-    <span>No user submitted!</span>
+    <span>No Data</span>
 </div>
 <div th:if="${submittedQuestionnaireList}">
-    <td>List of users who submitted the questionnaire:</td> <br>
+    <td>Submitted questionnaire user list:</td> <br>
     <span th:each="su : ${submittedQuestionnaireList}">
 		<ul>
 			<li th:text="${su.getUser().getUsername()}"></li>
@@ -35,10 +35,10 @@
 
 <hr />
 
-<td>List of users who cancelled the questionnaire:</td> <br>
+<td>Cancelled questionnaire user list:</td> <br>
 
 <div th:if="${cancelledQuestionnaireList == null}">
-    <span>No user cancelled!</span>
+    <span>No Data</span>
 </div>
 
 <div th:if="${cancelledQuestionnaireList}">
@@ -52,16 +52,16 @@
 
 <hr />
 
-<td >Questionnaire answers of each user:</td><br>
+<td >Questionnaire's answers:</td><br>
 
 <div th:if="${submittedQuestionnaireList == null}">
-    <span>No user submitted!</span>
+    <span>No Data</span>
 </div>
 
 <li th:text="${product.getName()}"> </li>
 
 <div th:if="${product.getName() == null}">
-	<span>No product this day, please choose another day!</span>
+	<span>There are no product in this day, please choose another date.</span>
 </div>
 <div th:if="${submittedQuestionnaireList}">
 	<span th:each="subq : ${submittedQuestionnaireList}">
