@@ -1,6 +1,7 @@
 package it.polimi.db2.services;
 
 import it.polimi.db2.entities.Product;
+import it.polimi.db2.exceptions.DuplicateInsertion;
 import it.polimi.db2.exceptions.InvalidInsert;
 
 import javax.ejb.Stateless;
@@ -16,7 +17,7 @@ public class ProductService {
 
     public ProductService() {
     }
-    public void setNewProduct(String name , int adminId, byte[] imagePath) throws InvalidInsert{
+    public void setNewProduct(String name , int adminId, byte[] imagePath) throws InvalidInsert, DuplicateInsertion {
         Product product = new Product();
 
         LocalDate date  = LocalDate.now();;
@@ -24,11 +25,14 @@ public class ProductService {
 //        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
 //        //获取string类型日期
 //        String today=dateFormat.format(date);
-
-        product = em.createNamedQuery("product.getProdByDate", Product.class).setParameter(1, date).getSingleResult();
+        try{
+            product = em.createNamedQuery("product.getProdByDate", Product.class).setParameter(1, date).getSingleResult();
+        }catch (NoResultException e){
+            product = null;
+        }
 
         if(product != null){
-            throw new InvalidInsert("Today already exist product");
+            throw new DuplicateInsertion("Today already exist product");
         }
         else{
             product.setProductDate(date);
@@ -36,11 +40,21 @@ public class ProductService {
             product.setName(name);
             product.setImage(imagePath);
 
-            this.em.persist(product);
-            this.em.flush();
+            try{
+                this.em.persist(product);
+                this.em.flush();
+            }catch(Exception e){
+                if(e.getMessage().contains("a POD preceding the current day")){
+                    throw new InvalidInsert("You cannot insert a POD preceding the current day");
+                }
+
+            }
+
+
 
         }
     }
+
     public int getTodayProductId() throws NoResultException{
         Product product = null;
 

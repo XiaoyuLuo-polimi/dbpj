@@ -1,4 +1,6 @@
 import it.polimi.db2.entities.Administrator;
+import it.polimi.db2.exceptions.DuplicateInsertion;
+import it.polimi.db2.exceptions.InvalidInsert;
 import it.polimi.db2.services.ProductService;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.thymeleaf.TemplateEngine;
@@ -110,8 +112,12 @@ public class CreateQuestionnary extends HttpServlet {
         if(productId == 0) {
             try {
                 productService.setNewProduct(productName, admin.getId(), bytesImage);
-            } catch (Exception e) {
-                String loginpath = getServletContext().getContextPath() + "/AdminHome?errorMsg=Already have product today, can not create new one";
+            } catch (DuplicateInsertion e) {
+                String loginpath = getServletContext().getContextPath() + "/AdminHome?errorMsg=Already have product today, cannot create new one";
+                response.sendRedirect(loginpath);
+                return;
+            } catch (InvalidInsert e){
+                String loginpath = getServletContext().getContextPath() + "/AdminHome?errorMsg=You cannot insert a product of the day preceding the current day";
                 response.sendRedirect(loginpath);
                 return;
             }
