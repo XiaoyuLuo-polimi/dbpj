@@ -54,8 +54,8 @@ public class CreateQuestionnary extends HttpServlet {
         String ctxpath = getServletContext().getContextPath();
         HttpSession session = request.getSession();
         if (session.isNew() || session.getAttribute("administrator") == null) {
-            String loginpath = getServletContext().getContextPath() + "/AdminIndex.html";
-            response.sendRedirect(loginpath);
+            String adminHomePath = getServletContext().getContextPath() + "/AdminIndex.html";
+            response.sendRedirect(adminHomePath);
             return;
         }
 
@@ -80,12 +80,18 @@ public class CreateQuestionnary extends HttpServlet {
 
             if (productName == null || productName.isEmpty() ||
                     contentType == null || imageStream.available()<=0) {
-                throw new Exception("No empty filed!");
+
+                String adminHomePage = getServletContext().getContextPath() + "/AdminHome?errorMsg=The product file can not be empty or wrong format";
+                response.sendRedirect(adminHomePage);
+                return;
             }
             if (!contentType.contains("jpg")
                     && !contentType.contains("jpeg")
                     && !contentType.contains("png")){
-                throw new Exception("You can only upload jpg/jpeg or png image");
+                String adminHomePage = getServletContext().getContextPath() + "/AdminHome?errorMsg=You can only upload png jpg jpeg format file";
+                response.sendRedirect(adminHomePage);
+                return;
+
             }
         } catch (NumberFormatException | NullPointerException e) {
             isBadRequest = true;
