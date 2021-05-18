@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name = "user", schema = "db2")
 @NamedQuery(name = "User.checkCredentials", query = "SELECT r FROM User r  WHERE r.username = ?1 and r.password = ?2")
 @NamedQuery(name = "User.checkUsername", query = "SELECT r FROM User r  WHERE r.username = ?1")
-@NamedQuery(name = "User.getUserOrderByPoint", query = "SELECT r FROM User r  ORDER BY r.points DESC")
+@NamedQuery(name = "User.getUserOrderByPoint", query = "SELECT r FROM User r WHERE r.points>0 ORDER BY r.points DESC")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 

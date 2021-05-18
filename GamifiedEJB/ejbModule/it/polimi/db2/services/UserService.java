@@ -27,6 +27,7 @@ public class UserService {
 		}
 		return userList;
 	}
+
 	public User checkCredentials(String usrn, String pwd) throws NonUniqueResultException, CannotConnectToDB {
 		List<User> uList = null;
 		try {

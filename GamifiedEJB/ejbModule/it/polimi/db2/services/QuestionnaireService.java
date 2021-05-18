@@ -32,6 +32,7 @@ public class QuestionnaireService {
         Questionnaire questionnaire = em.find(Questionnaire.class,id);
         return questionnaire;
     }
+
     public List<Questionnaire> getAllSubmittedQuestionnaire(){
         List<Questionnaire> questionnairesList = new ArrayList<>();
         questionnairesList = em.createNamedQuery("questionnaire.getAllquestionnaire", Questionnaire.class).getResultList();
@@ -90,23 +91,32 @@ public class QuestionnaireService {
     }
 
 
-    public void cancelAQuestionnaire(int userId, int pId, LocalDateTime dateTime) throws HasBeenBlocked {
+    public void cancelAQuestionnaire(int userId, int pId, LocalDateTime dateTime) throws HasBeenBlocked, InvalidInsert {
+        LocalDateTime time=LocalDateTime.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd 00:00:00");
+        String strtime = dtf.format(time);
+        DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime new_time=LocalDateTime.parse(strtime,dtf2);
 
-            Questionnaire questionnaire=new Questionnaire();
+        Questionnaire qn=getQuestionnaireByUserId(userId,pId);
+        if(qn == null) {
+            Questionnaire questionnaire = new Questionnaire();
             questionnaire.setUserId(userId);
             questionnaire.setProductId(pId);
             questionnaire.setCreateTime(dateTime);
             questionnaire.setIsCancelled(1);
-            try{
+            try {
                 this.em.persist(questionnaire);
                 this.em.flush();
-            }
-            catch(Exception e) {
+            } catch (Exception e) {
                 if (e.getMessage().contains("has been blocked")) {
                     System.out.println("This user has been blocked, cannot insert into qn.");
                     throw new HasBeenBlocked("Detect offensive words in the marketing answers");
                 }
             }
+        }else{
+            throw new InvalidInsert("You've already answer this question");
+        }
 
 
     }

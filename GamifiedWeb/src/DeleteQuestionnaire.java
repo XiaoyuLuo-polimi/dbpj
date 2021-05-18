@@ -38,6 +38,7 @@ public class DeleteQuestionnaire extends HttpServlet {
 
     @EJB(name = "it.polimi.db2.services/ProductService")
     private ProductService productService;
+
     @EJB(name = "it.polimi.db2.services/QuestionnaireService")
     private QuestionnaireService questionnaireService;
 

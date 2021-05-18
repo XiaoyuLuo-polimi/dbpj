@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/InspectionPage")
-public class InspectionPage extends HttpServlet {
+public class GoToInspectionPage extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
 

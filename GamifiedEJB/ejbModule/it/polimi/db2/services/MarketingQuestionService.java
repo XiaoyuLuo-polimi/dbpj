@@ -39,16 +39,5 @@ public class MarketingQuestionService {
         }
     }
 
-    public List<MarketingQuestion> getTodayQuestion() throws NoResultException {
-        try {
-            int prodId = prodService.getTodayProductId();
-            List<MarketingQuestion> marketingQuestionList = null;
-            marketingQuestionList = em.createNamedQuery("answer.getTodayQuestionByProdId",MarketingQuestion.class).setParameter(1, prodId).getResultList();
-            return marketingQuestionList;
-        }
-        catch (PersistenceException var3){
-            throw new NoResultException("Today do not exist product");
-        }
-    }
 
 }

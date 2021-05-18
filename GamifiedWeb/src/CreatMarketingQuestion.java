@@ -19,7 +19,7 @@ import java.io.IOException;
 
 @MultipartConfig
 @WebServlet("/CreateCustomQuestion")
-public class CreateCustomQuestion extends HttpServlet {
+public class CreatMarketingQuestion extends HttpServlet {
     private TemplateEngine templateEngine;
     @EJB(name = "it.polimi.db2.services/MarketingQuestionService")
     private MarketingQuestionService marketingQuestionService;

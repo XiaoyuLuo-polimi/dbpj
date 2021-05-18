@@ -163,8 +163,13 @@ public class SubmitQuestionnaire extends HttpServlet {
                 String path = null;
                 path = getServletContext().getContextPath() + "/UserHome";
                 response.sendRedirect(path);
-            }catch( HasBeenBlocked hasBeenBlocked){
+            }catch(HasBeenBlocked hasBeenBlocked){
                 request.getSession().setAttribute("errorMsgHome","Attention: Your account is blocked.");
+                String path = null;
+                path = getServletContext().getContextPath() + "/UserHome";
+                response.sendRedirect(path);
+            }catch (InvalidInsert invalidInsert){
+                request.getSession().setAttribute("errorMsgHome","Attention: Failed, since you have already submitted a questionnaire today.");
                 String path = null;
                 path = getServletContext().getContextPath() + "/UserHome";
                 response.sendRedirect(path);

@@ -10,7 +10,6 @@
 		<class>it.polimi.db2.entities.Administrator</class>
 		<class>it.polimi.db2.entities.MarketingQuestion</class>
 		<class>it.polimi.db2.entities.MktqOfProduct</class>
-		<class>it.polimi.db2.entities.OffensiveWord</class>
 		<class>it.polimi.db2.entities.Questionnaire</class>
 		<class>it.polimi.db2.entities.Product</class>
         <class>generated.AdministratorEntity</class>

@@ -6,7 +6,6 @@ import java.util.Map;
 
 @Entity
 @Table(name = "marketing_question", schema = "db2")
-@NamedQuery(name = "answer.getTodayQuestionByProdId", query = "SELECT r FROM MarketingQuestion r  WHERE r.productId = ?1")
 public class MarketingQuestion implements Serializable{
     private static final long serialVersionUID = 1L;
 
@@ -59,8 +58,6 @@ public class MarketingQuestion implements Serializable{
     public void setQuestionnaireMap(Map<Questionnaire, String> questionnaireMap) {
         this.questionnaireMap = questionnaireMap;
     }
-
-
 
 
     @ManyToMany(mappedBy = "marketingQuestions")
