@@ -1,5 +1,6 @@
 package it.polimi.db2.services;
 
+import it.polimi.db2.entities.Administrator;
 import it.polimi.db2.entities.Product;
 import it.polimi.db2.exceptions.DuplicateInsertion;
 import it.polimi.db2.exceptions.InvalidInsert;
@@ -18,10 +19,11 @@ public class ProductService {
 
     public ProductService() {
     }
-    public void setNewProductAfterYesterday(String name , int adminId, byte[] imagePath, LocalDate date) throws InvalidInsert, DuplicateInsertion {
+
+    public void setNewProductAfterYesterday(String name , Administrator admin, byte[] imagePath, LocalDate date) throws InvalidInsert, DuplicateInsertion {
         Product product = new Product();
         product.setProductDate(date);
-        product.setAdminId(adminId);
+        product.setAdministrator(admin);
         product.setName(name);
         product.setImage(imagePath);
             try{
@@ -34,6 +36,7 @@ public class ProductService {
 
         }
     }
+
     public int isExistProductInThatDate(LocalDate date) throws NoResultException{
         Product product = null;
         try {
@@ -48,7 +51,6 @@ public class ProductService {
             return 0;
         }
     }
-
 
 
     public int getTodayProductId() throws NoResultException{
@@ -89,16 +91,4 @@ public class ProductService {
         return product;
     }
 
-
-    public Product getProductByDate(LocalDate date) throws NoResultException{
-        Product product = null;
-
-        try {
-            product = em.createNamedQuery("product.getProdByDate", Product.class).setParameter(1, date).getSingleResult();
-            em.refresh(product);
-        }catch (NoResultException e){
-            return null;
-        }
-        return product;
-    }
 }
