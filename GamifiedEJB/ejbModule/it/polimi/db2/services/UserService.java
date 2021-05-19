@@ -81,12 +81,6 @@ public class UserService {
 
 	}
 
-	public String getUsernameById(int id){
-		User user = em.find(User.class,id);
-		em.refresh(user);
-		return user.getUsername();
-	}
-
 	public void blockUserById(int id){
 		User user = em.find(User.class,id);
 		user.setIsblocked(1);
@@ -94,11 +88,4 @@ public class UserService {
 		this.em.flush();
 	}
 
-	public void updateProfile(User u) throws UpdateProfileException {
-		try {
-			em.merge(u);
-		} catch (PersistenceException e) {
-			throw new UpdateProfileException("Could not change profile");
-		}
-	}
 }
