@@ -8,6 +8,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.ejb.EJB;
+import javax.ejb.Local;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
 
 @MultipartConfig
 @WebServlet("/CreateCustomQuestion")
@@ -63,15 +65,11 @@ public class CreatMarketingQuestion extends HttpServlet {
         }
 
         Product product=null;
-//        try {
-//            Product product = productService.getTodayProduct();
-//        } catch (Exception e) {
-//            // response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "There are no product today");
-//        }
-
         boolean isBadRequest = false;
+        LocalDate date = (LocalDate)session.getAttribute("InsertProductDate");
+
         try {
-            product = productService.getTodayProduct();
+            product = productService.getProductByDate(date);
         } catch (Exception e) {
             String loginpath = getServletContext().getContextPath() + "/AdminIndex.html";
             response.sendRedirect(loginpath);return;
@@ -100,8 +98,5 @@ public class CreatMarketingQuestion extends HttpServlet {
     }
 
     public void destroy(){
-
     }
-
-
 }
