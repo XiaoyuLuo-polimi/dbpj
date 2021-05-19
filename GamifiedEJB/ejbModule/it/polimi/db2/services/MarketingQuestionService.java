@@ -23,11 +23,6 @@ public class MarketingQuestionService {
     @EJB(name = "it.polimi.db2.services/ProductService")
     private ProductService prodService;
 
-    public MarketingQuestionService() {
-    }
-
-    ;
-
     public void insertQuesToProd(String questionContent, Product product) throws InvalidInsert {
         MarketingQuestion marketingQuestion = new MarketingQuestion();
         marketingQuestion.setQuestionContent(questionContent);

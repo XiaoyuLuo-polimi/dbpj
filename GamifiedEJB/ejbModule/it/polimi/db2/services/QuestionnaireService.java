@@ -27,11 +27,6 @@ public class QuestionnaireService {
     public QuestionnaireService() {
     }
 
-    public Questionnaire getQuestionnaireById(int id){
-        Questionnaire questionnaire = em.find(Questionnaire.class,id);
-        return questionnaire;
-    }
-
     public List<Questionnaire> getAllSubmittedQuestionnaire(){
         List<Questionnaire> questionnairesList = new ArrayList<>();
         questionnairesList = em.createNamedQuery("questionnaire.getAllquestionnaire", Questionnaire.class).getResultList();
@@ -59,8 +54,6 @@ public class QuestionnaireService {
 
         int userId=user.getId();
         int pId=product.getId();
-
-        System.out.println("######################"+userId+","+pId);
 
         Questionnaire qn=getQuestionnaireByUserId(userId,pId);
         if(qn == null) {
@@ -117,14 +110,13 @@ public class QuestionnaireService {
         }else{
             throw new InvalidInsert("You've already answer this question");
         }
-
-
     }
+
+
     public void deleteQuestionnaireByModifyField(int questionnaireId, Administrator admin) throws NoResultException {
         Questionnaire questionnaire = new Questionnaire();
         try{
             questionnaire = em.find(Questionnaire.class,questionnaireId);
-            this.em.flush();
         }catch(PersistenceException e){
             throw new NoResultException("ERROR");
         }
@@ -136,16 +128,5 @@ public class QuestionnaireService {
             throw new NoResultException("ERROR");
         }
     }
-
-    public void deleteQuestionnaire(int questionnaireId) throws NoResultException {
-        Questionnaire questionnaire = em.find(Questionnaire.class,questionnaireId);
-        if(questionnaire == null){
-            throw new NoResultException("Does not exist that questionnaire");
-        }
-        else{
-            em.remove(questionnaire);
-        }
-    }
-
 
 }

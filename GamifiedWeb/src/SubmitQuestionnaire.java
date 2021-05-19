@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -75,9 +76,11 @@ public class SubmitQuestionnaire extends HttpServlet {
         expLevel=StringEscapeUtils.escapeJava(request.getParameter("expLevel"));
         request.getSession().setAttribute("expLevel",expLevel);
 
+        Product product=null;
         int pId= 0;
         try {
-            pId = pService.getTodayProductId();
+            product = pService.getTodayProduct();
+            pId = product.getId();
         } catch (NoResultException noResultException) {
             pId = -1;
         }
@@ -87,8 +90,6 @@ public class SubmitQuestionnaire extends HttpServlet {
         User user= (User) request.getSession().getAttribute("user");
         int uId = 0;
         uId = user.getId();
-
-        Product product= (Product) request.getSession().getAttribute("product");
 
         if(StringEscapeUtils.escapeJava(request.getParameter("complete")).equals("Previous Page")){
             String path = getServletContext().getContextPath() + "/MktQuestionPage";
