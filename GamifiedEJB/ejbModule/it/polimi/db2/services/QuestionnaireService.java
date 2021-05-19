@@ -113,14 +113,14 @@ public class QuestionnaireService {
     }
 
 
-    public void deleteQuestionnaireByModifyField(int questionnaireId, Administrator admin) throws NoResultException {
+    public void deleteQuestionnaireByModifyField(int questionnaireId, Administrator administrator) throws NoResultException {
         Questionnaire questionnaire = new Questionnaire();
         try{
             questionnaire = em.find(Questionnaire.class,questionnaireId);
         }catch(PersistenceException e){
             throw new NoResultException("ERROR");
         }
-        questionnaire.setAdministrator(admin);
+        questionnaire.setAdministrator(administrator);
         try{
             this.em.persist(questionnaire);
             this.em.flush();
