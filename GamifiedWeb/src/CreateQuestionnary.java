@@ -40,7 +40,7 @@ public class CreateQuestionnary extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Redirect to the Home page and add missions to the parameters
-        String path = "/WEB-INF/CreateQuestionnary.html";
+        String path = "/WEB-INF/CreateQuestionnaire.html";
         ServletContext servletContext = getServletContext();
         String loginpath = getServletContext().getContextPath() + "/AdminIndex.html";
         HttpSession session = request.getSession();
@@ -138,7 +138,7 @@ public class CreateQuestionnary extends HttpServlet {
 
         if(productId == 0) {
             try {
-                productService.setNewProductAfterYesterday(productName, admin.getId(), bytesImage,date);
+                productService.setNewProductAfterYesterday(productName, admin, bytesImage,date);
             } catch (DuplicateInsertion e) {
                 String loginpath = getServletContext().getContextPath() + "/AdminHome?errorMsg=Already have product today, cannot create new one";
                 response.sendRedirect(loginpath);

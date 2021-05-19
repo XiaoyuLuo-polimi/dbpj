@@ -13,8 +13,6 @@ public class MarketingQuestion implements Serializable{
     private int id;
     @Column(name = "question_content")
     private String questionContent;
-    @Column(name = "product_id")
-    private int productId;
 
     public int getId() {
         return id;
@@ -22,14 +20,6 @@ public class MarketingQuestion implements Serializable{
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
     }
 
     public String getQuestionContent() {
@@ -75,7 +65,7 @@ public class MarketingQuestion implements Serializable{
 
 
     @ManyToOne
-    @JoinColumn(name = "product_id",insertable = false,updatable = false)
+    @JoinColumn(name = "product_id")
     private Product product;
 
     public Product getProduct() {

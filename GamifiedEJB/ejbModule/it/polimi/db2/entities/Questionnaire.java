@@ -9,8 +9,8 @@ import java.util.Map;
 
 @Entity
 @Table(name = "questionnaire", schema = "db2")
-@NamedQuery(name = "questionnaire.getQuesByUserId", query = "SELECT r FROM Questionnaire r  WHERE r.userId = ?1 and r.productId = ?2 and r.isCancelled=0")
-@NamedQuery(name = "questionnaire.getAllquestionnaire", query = "SELECT r FROM Questionnaire r  WHERE r.isCancelled=0 and r.adminId=0")
+@NamedQuery(name = "questionnaire.getQuesByUserId", query = "SELECT r FROM Questionnaire r  WHERE r.user.id = ?1 and r.product.id= ?2 and r.isCancelled=0")
+@NamedQuery(name = "questionnaire.getAllquestionnaire", query = "SELECT r FROM Questionnaire r  WHERE r.isCancelled=0 and r.administrator.id=0")
 public class Questionnaire implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -27,15 +27,6 @@ public class Questionnaire implements Serializable {
 
     @Column(name = "create_time")
     private LocalDateTime createTime;
-
-    @Column(name = "product_id")
-    private int productId;
-
-    @Column(name = "admin_id")
-    private int adminId;
-
-    @Column(name = "user_id")
-    private int userId;
 
     @Column(name = "iscancelled")
     private int isCancelled;
@@ -80,30 +71,6 @@ public class Questionnaire implements Serializable {
         this.createTime = createTime;
     }
 
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public int getAdminId() {
-        return adminId;
-    }
-
-    public void setAdminId(int adminId) {
-        this.adminId = adminId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
     public int getIsCancelled() {
         return isCancelled;
     }
@@ -115,7 +82,7 @@ public class Questionnaire implements Serializable {
 
 
     @ManyToOne
-    @JoinColumn(name="user_id",insertable = false,updatable = false)
+    @JoinColumn(name="user_id")
     private User user;
 
     public User getUser() {
@@ -129,7 +96,7 @@ public class Questionnaire implements Serializable {
 
 
     @ManyToOne
-    @JoinColumn(name = "admin_id",insertable = false,updatable = false)
+    @JoinColumn(name = "admin_id")
     private Administrator administrator;
 
     public Administrator getAdministrator() {
@@ -144,7 +111,7 @@ public class Questionnaire implements Serializable {
 
 
     @ManyToOne
-    @JoinColumn(name = "product_id",insertable = false,updatable = false)
+    @JoinColumn(name = "product_id")
     private Product product;
 
     public Product getProduct() {

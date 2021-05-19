@@ -1,4 +1,6 @@
+import it.polimi.db2.entities.MarketingQuestion;
 import it.polimi.db2.entities.Product;
+import it.polimi.db2.entities.Questionnaire;
 import it.polimi.db2.services.ProductService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -14,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 @WebServlet("/UserHome")
 public class GoToUserHomePage extends HttpServlet {
@@ -47,6 +51,13 @@ public class GoToUserHomePage extends HttpServlet {
         }
 
         Product product=productService.getTodayProduct();
+        List<MarketingQuestion> mqs=product.getMarketingQuestionsList();
+        for(int i=0;i<mqs.size();i++){
+            Map<Questionnaire,String> mqMap=mqs.get(i).getQuestionnaireMap();
+            for(Questionnaire q:mqMap.keySet()){
+                System.out.println(q+","+q.getUser().getUsername()+","+mqMap.get(q));
+            }
+        }
 
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
@@ -58,6 +69,9 @@ public class GoToUserHomePage extends HttpServlet {
         }
 
         templateEngine.process(path, ctx, response.getWriter());
+
+        request.getSession().removeAttribute("errorMsgHome");
+        request.getSession().removeAttribute("product");
 
     }
 

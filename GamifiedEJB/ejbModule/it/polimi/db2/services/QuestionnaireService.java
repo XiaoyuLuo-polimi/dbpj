@@ -1,7 +1,6 @@
 package it.polimi.db2.services;
 
-import it.polimi.db2.entities.MarketingQuestion;
-import it.polimi.db2.entities.Questionnaire;
+import it.polimi.db2.entities.*;
 import it.polimi.db2.exceptions.HasBeenBlocked;
 import it.polimi.db2.exceptions.InvalidInsert;
 import it.polimi.db2.exceptions.OffensiveWordsInsert;
@@ -28,14 +27,12 @@ public class QuestionnaireService {
     public QuestionnaireService() {
     }
 
-    public Questionnaire getQuestionnaireById(int id){
-        Questionnaire questionnaire = em.find(Questionnaire.class,id);
-        return questionnaire;
-    }
-
     public List<Questionnaire> getAllSubmittedQuestionnaire(){
         List<Questionnaire> questionnairesList = new ArrayList<>();
         questionnairesList = em.createNamedQuery("questionnaire.getAllquestionnaire", Questionnaire.class).getResultList();
+        for(Questionnaire q:questionnairesList){
+            em.refresh(q);
+        }
         return questionnairesList;
     }
 
@@ -52,21 +49,19 @@ public class QuestionnaireService {
 
 
 
-    public void submitQuestionnaire(int userId, int pId, int age, String sex, String expLevel, LocalDateTime dateTime,
+    public void submitQuestionnaire(User user, Product product, int age, String sex, String expLevel, LocalDateTime dateTime,
                                     Map<MarketingQuestion,String> mktqaMap) throws InvalidInsert, OffensiveWordsInsert, HasBeenBlocked {
-        LocalDateTime time=LocalDateTime.now();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd 00:00:00");
-        String strtime = dtf.format(time);
-        DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime new_time=LocalDateTime.parse(strtime,dtf2);
+
+        int userId=user.getId();
+        int pId=product.getId();
 
         Questionnaire qn=getQuestionnaireByUserId(userId,pId);
         if(qn == null) {
             Questionnaire questionnaire = new Questionnaire();
 //            System.out.println("############## function" + userId + "," + pId + "," + age + "," + sex + "," + expLevel + "," + dateTime+","+mktqaMap);
-            questionnaire.setUserId(userId);
+            questionnaire.setUser(user);
 //            System.out.println("############## function" + userId);
-            questionnaire.setProductId(pId);
+            questionnaire.setProduct(product);
             questionnaire.setAge(age);
             questionnaire.setExpertiseLevel(expLevel);
             questionnaire.setSex(sex);
@@ -91,18 +86,16 @@ public class QuestionnaireService {
     }
 
 
-    public void cancelAQuestionnaire(int userId, int pId, LocalDateTime dateTime) throws HasBeenBlocked, InvalidInsert {
-        LocalDateTime time=LocalDateTime.now();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd 00:00:00");
-        String strtime = dtf.format(time);
-        DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime new_time=LocalDateTime.parse(strtime,dtf2);
+    public void cancelAQuestionnaire(User user,Product product, LocalDateTime dateTime) throws HasBeenBlocked, InvalidInsert {
+
+        int userId=user.getId();
+        int pId=product.getId();
 
         Questionnaire qn=getQuestionnaireByUserId(userId,pId);
         if(qn == null) {
             Questionnaire questionnaire = new Questionnaire();
-            questionnaire.setUserId(userId);
-            questionnaire.setProductId(pId);
+            questionnaire.setUser(user);
+            questionnaire.setProduct(product);
             questionnaire.setCreateTime(dateTime);
             questionnaire.setIsCancelled(1);
             try {
@@ -117,18 +110,17 @@ public class QuestionnaireService {
         }else{
             throw new InvalidInsert("You've already answer this question");
         }
-
-
     }
-    public void deleteQuestionnaireByModifyField(int questionnaireId,int adminId) throws NoResultException {
+
+
+    public void deleteQuestionnaireByModifyField(int questionnaireId, Administrator admin) throws NoResultException {
         Questionnaire questionnaire = new Questionnaire();
         try{
             questionnaire = em.find(Questionnaire.class,questionnaireId);
-            this.em.flush();
         }catch(PersistenceException e){
             throw new NoResultException("ERROR");
         }
-        questionnaire.setAdminId(adminId);
+        questionnaire.setAdministrator(admin);
         try{
             this.em.persist(questionnaire);
             this.em.flush();
@@ -136,16 +128,5 @@ public class QuestionnaireService {
             throw new NoResultException("ERROR");
         }
     }
-
-    public void deleteQuestionnaire(int questionnaireId) throws NoResultException {
-        Questionnaire questionnaire = em.find(Questionnaire.class,questionnaireId);
-        if(questionnaire == null){
-            throw new NoResultException("Does not exist that questionnaire");
-        }
-        else{
-            em.remove(questionnaire);
-        }
-    }
-
 
 }

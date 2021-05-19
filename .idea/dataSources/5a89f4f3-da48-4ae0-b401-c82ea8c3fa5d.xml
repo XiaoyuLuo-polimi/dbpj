@@ -1165,7 +1165,7 @@ mkt_question_id</ColNames>
       <Events>U</Events>
     </trigger>
     <trigger id="340" parent="289" name="qndeletion">
-      <SourceTextLength>623</SourceTextLength>
+      <SourceTextLength>632</SourceTextLength>
       <Definer>root@%</Definer>
       <Turn>after-row</Turn>
       <Events>U</Events>
