@@ -40,7 +40,7 @@ public class GoToUserHomePage extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Redirect to the Home page and add missions to the parameters
+        // Redirect to the login page if session is new.
         String path = "/WEB-INF/UserHome.html";
         ServletContext servletContext = getServletContext();
         String loginpath = getServletContext().getContextPath() + "/index.html";
@@ -50,14 +50,8 @@ public class GoToUserHomePage extends HttpServlet {
             return;
         }
 
+        //get the today's product, and add it into webContext.
         Product product=productService.getTodayProduct();
-        List<MarketingQuestion> mqs=product.getMarketingQuestionsList();
-        for(int i=0;i<mqs.size();i++){
-            Map<Questionnaire,String> mqMap=mqs.get(i).getQuestionnaireMap();
-            for(Questionnaire q:mqMap.keySet()){
-                System.out.println(q+","+q.getUser().getUsername()+","+mqMap.get(q));
-            }
-        }
 
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 

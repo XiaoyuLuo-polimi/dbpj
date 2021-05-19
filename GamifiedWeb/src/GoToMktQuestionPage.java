@@ -45,7 +45,7 @@ public class GoToMktQuestionPage extends HttpServlet{
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Redirect to the Home page and add missions to the parameters
+        //Redirect to the login page if session is new.
         String path = "/WEB-INF/MarketingQuestion.html";
         ServletContext servletContext = getServletContext();
         String loginpath = getServletContext().getContextPath() + "/index.html";
@@ -55,6 +55,9 @@ public class GoToMktQuestionPage extends HttpServlet{
             return;
         }
 
+        //obtain the marketing questions from the today's product;
+        //if there is no product, then remind user corresponding message.
+        //if there is a product of today, then insert the product into session for later use.
         Product product=productService.getTodayProduct();
         List<MarketingQuestion> mktQuestions = null;
         if(product != null) {
@@ -63,16 +66,14 @@ public class GoToMktQuestionPage extends HttpServlet{
             mktQuestions = null;
         }
 
+        final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
         if (mktQuestions == null) {
-            final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
             ctx.setVariable("errorMsg", "No marketing questions");
-            templateEngine.process(path, ctx, response.getWriter());
         } else {
             request.getSession().setAttribute("product",product);
-            final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
             ctx.setVariable("marketingQuestions", mktQuestions);
-            templateEngine.process(path, ctx, response.getWriter());
         }
+        templateEngine.process(path, ctx, response.getWriter());
 
 
     }

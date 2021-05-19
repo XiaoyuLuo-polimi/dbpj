@@ -47,8 +47,8 @@ public class GoToStatQuestionPage extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String path = "/WEB-INF/StatisticalQuestion.html";
+        //Redirect to the login page if session is new.
         ServletContext servletContext = getServletContext();
         String loginpath = getServletContext().getContextPath() + "/index.html";
         HttpSession session = request.getSession();
@@ -57,6 +57,7 @@ public class GoToStatQuestionPage extends HttpServlet {
             return;
         }
 
+        //get the today's product from session, and get marketing questions from product.
         Product product= (Product) request.getSession().getAttribute("product");
 
         List<MarketingQuestion> mktQuestions = null;
@@ -66,6 +67,7 @@ public class GoToStatQuestionPage extends HttpServlet {
             mktQuestions = null;
         }
 
+        //obtain the marketing answers from the front-end by using marketing question id,then count the number of answered questions.
         if (mktQuestions != null) {
             String mktAnswer = null;
             for (int i = 0; i < mktQuestions.size(); i++) {
@@ -76,20 +78,16 @@ public class GoToStatQuestionPage extends HttpServlet {
                 }
             }
 
-
+            //put Marketing Question and the corresponding answer into the Map if all marketing questions are answered by the user.
+            //otherwise,remind the user of the number of unanswered questions.
             if (QuestionAnsweredNum == mktQuestions.size()) {
-//                System.out.println("###################"+product.getName());
                 Map<MarketingQuestion,String> questionAnswerMap = new HashMap<>();
 
-                //put Marketing Question and the corresponding answer into the Map.
                 for(MarketingQuestion marketingQuestion: product.getMarketingQuestionsList()){
-//                    System.out.println(String.valueOf(marketingQuestion.getId()));
                     mktAnswer = StringEscapeUtils.escapeJava(request.getParameter("mktq" + String.valueOf(marketingQuestion.getId())));
-//                    System.out.println(mktAnswer);
                     questionAnswerMap.put(marketingQuestion,mktAnswer);
                 }
                 request.getSession().setAttribute("mktqaMap",questionAnswerMap);
-//                request.getSession().setAttribute("errorMsg",null);
                 QuestionAnsweredNum=0;
 
                 final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());

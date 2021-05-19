@@ -45,7 +45,9 @@ public class Register extends HttpServlet {
         String pwd2 = null;
         String email = null;
 
-
+        //obtain the params, then determine the validity of them.
+        //if they cannot meet the requirement of registration,then send the error message to the front-end.
+        //otherwise, redirect to the login page.
         usrn = StringEscapeUtils.escapeJava(request.getParameter("username"));
         pwd1 = StringEscapeUtils.escapeJava(request.getParameter("pwd1"));
         pwd2 = StringEscapeUtils.escapeJava(request.getParameter("pwd2"));

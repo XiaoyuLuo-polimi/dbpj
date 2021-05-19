@@ -18,6 +18,8 @@ public class ProductService {
 
     public ProductService() {
     }
+
+    //insert a product that the product date is the current day or a posterior date.
     public void setNewProductAfterYesterday(String name , Administrator admin, byte[] imagePath, LocalDate date) throws InvalidInsert, DuplicateInsertion {
         Product product = new Product();
         product.setProductDate(date);
@@ -33,6 +35,7 @@ public class ProductService {
                 }
         }
     }
+
     public int isExistProductInThatDate(LocalDate date) throws NoResultException{
         Product product = null;
         try {

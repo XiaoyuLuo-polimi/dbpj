@@ -60,7 +60,7 @@ public class SubmitQuestionnaire extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Redirect to the Home page and add missions to the parameters
+        //Redirect to the login page if session is new.
         ServletContext servletContext = getServletContext();
         String loginpath = getServletContext().getContextPath() + "/index.html";
         HttpSession session = request.getSession();
@@ -69,6 +69,7 @@ public class SubmitQuestionnaire extends HttpServlet {
             return;
         }
 
+        //obtain the statistical answers from the front-end.
         age = StringEscapeUtils.escapeJava(request.getParameter("age"));
         request.getSession().setAttribute("age",age);
         gender=StringEscapeUtils.escapeJava(request.getParameter("gender"));
@@ -76,6 +77,7 @@ public class SubmitQuestionnaire extends HttpServlet {
         expLevel=StringEscapeUtils.escapeJava(request.getParameter("expLevel"));
         request.getSession().setAttribute("expLevel",expLevel);
 
+        //get the product and its id for the later questionnaire submission.
         Product product=null;
         int pId= 0;
         try {
@@ -87,19 +89,23 @@ public class SubmitQuestionnaire extends HttpServlet {
 
         LocalDateTime time=LocalDateTime.now();
 
+        //get the user from session for the later questionnaire submission.
+        //get the user id from user for the later user block.
         User user= (User) request.getSession().getAttribute("user");
         int uId = 0;
         uId = user.getId();
 
+        //Determine whether the button clicked on the front-end is submit or the previous page or cancell.
+        //if the button clicked is previous page,then redirect to the marketing question page.
+        //if the button clicked is submit, then prepare all questionnaire data and submit it into DB.
+        //if the button clicked is cancel, then insert a cancelled quesitonnaire into DB, and redirect to the user home page.
         if(StringEscapeUtils.escapeJava(request.getParameter("complete")).equals("Previous Page")){
             String path = getServletContext().getContextPath() + "/MktQuestionPage";
             response.sendRedirect(path);
         }else if (StringEscapeUtils.escapeJava(request.getParameter("complete")).equals("Submit")){
-//            System.out.println("#############submit1###############");
             String mktAnswer = null;
             String new_gender = null;
 
-//            System.out.println("#############submit2###############");
 
             if(pId>0){
                 int int_age=0;

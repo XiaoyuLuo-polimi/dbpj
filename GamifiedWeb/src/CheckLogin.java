@@ -46,13 +46,14 @@ public class CheckLogin extends HttpServlet {
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// Redirect to the Home page and add missions to the parameters
+		// Redirect to the login page if session is new.
 		String path = "/index.html";
 		ServletContext servletContext = getServletContext();
 		HttpSession session = request.getSession();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		templateEngine.process(path, ctx, response.getWriter());
 	}
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// obtain and escape params
@@ -80,8 +81,8 @@ public class CheckLogin extends HttpServlet {
 			return;
 		}
 
-		// If the user exists, add info to the session and go to home page, otherwise
-		// show login page with error message
+		// If the user exists, add user into the session and go to home page,
+		// otherwise, show login page with error message
 
 		String path;
 		if (user == null) {
@@ -94,22 +95,6 @@ public class CheckLogin extends HttpServlet {
 			request.getSession().setAttribute("user", user);
 			path = getServletContext().getContextPath() + "/UserHome";
 			response.sendRedirect(path);
-
-//			Product product=productService.getTodayProduct();
-//			System.out.println(product);
-//			List<MarketingQuestion> marketingQuestionList=product.getMarketingQuestionsList();
-//			System.out.println(marketingQuestionList.size());
-//			for(int i=0;i<marketingQuestionList.size();i++){
-//				System.out.println(marketingQuestionList.get(i).getId()+","+marketingQuestionList.get(i).getQuestionContent());
-//				Map<Questionnaire,String> questionnaires=marketingQuestionList.get(i).getQuestionnaireMap();
-//				System.out.println(questionnaires.size()+","+questionnaires.keySet());
-////				for(Questionnaire questionnaire: questionnaires.keySet()){
-////					questionnaire.setMarketingAnswers(marketingQuestionList.get(i),"I AM answer of "+i );
-////				}
-//				for(Questionnaire questionnaire: questionnaires.keySet()) {
-//					System.out.println(questionnaires.get(questionnaire));
-//				}
-//			}
 		}
 
 	}
