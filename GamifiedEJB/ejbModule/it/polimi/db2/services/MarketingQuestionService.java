@@ -3,6 +3,7 @@ package it.polimi.db2.services;
 
 import it.polimi.db2.entities.MarketingQuestion;
 
+import it.polimi.db2.entities.Product;
 import it.polimi.db2.exceptions.InvalidInsert;
 
 import javax.ejb.EJB;
@@ -27,10 +28,10 @@ public class MarketingQuestionService {
 
     ;
 
-    public void insertQuesToProd(String questionContent, int productId) throws InvalidInsert {
+    public void insertQuesToProd(String questionContent, Product product) throws InvalidInsert {
         MarketingQuestion marketingQuestion = new MarketingQuestion();
         marketingQuestion.setQuestionContent(questionContent);
-        marketingQuestion.setProductId(productId);
+        marketingQuestion.setProduct(product);
         try {
             this.em.persist(marketingQuestion);
         }

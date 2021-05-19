@@ -1,4 +1,5 @@
 import it.polimi.db2.entities.MarketingQuestion;
+import it.polimi.db2.entities.Product;
 import it.polimi.db2.entities.User;
 import it.polimi.db2.exceptions.HasBeenBlocked;
 import it.polimi.db2.exceptions.InvalidInsert;
@@ -67,7 +68,6 @@ public class SubmitQuestionnaire extends HttpServlet {
             return;
         }
 
-
         age = StringEscapeUtils.escapeJava(request.getParameter("age"));
         request.getSession().setAttribute("age",age);
         gender=StringEscapeUtils.escapeJava(request.getParameter("gender"));
@@ -87,6 +87,8 @@ public class SubmitQuestionnaire extends HttpServlet {
         User user= (User) request.getSession().getAttribute("user");
         int uId = 0;
         uId = user.getId();
+
+        Product product= (Product) request.getSession().getAttribute("product");
 
         if(StringEscapeUtils.escapeJava(request.getParameter("complete")).equals("Previous Page")){
             String path = getServletContext().getContextPath() + "/MktQuestionPage";
@@ -113,9 +115,6 @@ public class SubmitQuestionnaire extends HttpServlet {
                         new_gender="0";
                     }
 
-                    System.out.println(gender.equals("Male"));
-                    System.out.println(new_gender);
-
                     if(expLevel.length() == 0){
                         expLevel="0";
                     }
@@ -123,8 +122,8 @@ public class SubmitQuestionnaire extends HttpServlet {
                     Map<MarketingQuestion,String> mktqaMap =
                             (Map<MarketingQuestion,String>) session.getAttribute("mktqaMap");
 
-                    System.out.println(user.getId()+","+pId+","+int_age+","+new_gender+","+expLevel+","+time+","+mktqaMap);
-                    qnService.submitQuestionnaire(uId,pId,int_age,new_gender,expLevel,time,mktqaMap);
+//                    System.out.println(user.getId()+","+pId+","+int_age+","+new_gender+","+expLevel+","+time+","+mktqaMap);
+                    qnService.submitQuestionnaire(user,product,int_age,new_gender,expLevel,time,mktqaMap);
 
                     System.out.println("submit Questionnaire successfully");
 
@@ -136,7 +135,7 @@ public class SubmitQuestionnaire extends HttpServlet {
                 }catch(OffensiveWordsInsert exception){
 //                    System.out.println("******************"+uId);
                     uService.blockUserById(uId);
-                    System.out.println("OffensiveWordsInsert,blocked.");
+//                    System.out.println("OffensiveWordsInsert,blocked.");
                     request.getSession().setAttribute("errorMsgHome","Attention: Your account is blocked, since the system detected the offsensive words in the answers.");
                     String path = null;
                     path = getServletContext().getContextPath() + "/UserHome";
@@ -148,7 +147,7 @@ public class SubmitQuestionnaire extends HttpServlet {
                     response.sendRedirect(path);
                 }catch (InvalidInsert exception){
                     request.getSession().setAttribute("errorMsgHome","Attention: Failed, since you have already submitted a questionnaire today.");
-                    System.out.println("InvalidInsert");
+//                    System.out.println("InvalidInsert");
                     String path = null;
                     path = getServletContext().getContextPath() + "/UserHome";
                     response.sendRedirect(path);
@@ -156,7 +155,7 @@ public class SubmitQuestionnaire extends HttpServlet {
             }
         }else if (StringEscapeUtils.escapeJava(request.getParameter("complete")).equals("Cancel")){
             try{
-                qnService.cancelAQuestionnaire(uId,pId,time);
+                qnService.cancelAQuestionnaire(user,product,time);
                 request.getSession().setAttribute("errorMsgHome","You cancel the questionnaire successfully.");
                 String path = null;
                 path = getServletContext().getContextPath() + "/UserHome";

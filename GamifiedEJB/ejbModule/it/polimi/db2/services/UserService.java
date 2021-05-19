@@ -22,6 +22,9 @@ public class UserService {
 		List<User> userList = new ArrayList<>();
 		try {
 			userList = em.createNamedQuery("User.getUserOrderByPoint", User.class).getResultList();
+			for(User u:userList){
+				em.refresh(u);
+			}
 		}catch (PersistenceException e) {
 			System.out.print("Could not verify credentals");
 		}
@@ -80,6 +83,7 @@ public class UserService {
 
 	public String getUsernameById(int id){
 		User user = em.find(User.class,id);
+		em.refresh(user);
 		return user.getUsername();
 	}
 

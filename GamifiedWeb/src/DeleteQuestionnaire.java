@@ -81,7 +81,7 @@ public class DeleteQuestionnaire extends HttpServlet {
 
         if (questionnaireID != null && questionnaireID >= 0) {
             try {
-                questionnaireService.deleteQuestionnaireByModifyField(questionnaireID,administrator.getId());
+                questionnaireService.deleteQuestionnaireByModifyField(questionnaireID,administrator);
             } catch (Exception e) {
                 ctx.setVariable("errorMsg", e.getMessage());
                 templateEngine.process(path, ctx, response.getWriter());

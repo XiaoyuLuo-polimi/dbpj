@@ -1,3 +1,4 @@
+import it.polimi.db2.entities.Product;
 import it.polimi.db2.services.MarketingQuestionService;
 import it.polimi.db2.services.ProductService;
 import org.apache.commons.lang.StringEscapeUtils;
@@ -61,16 +62,16 @@ public class CreatMarketingQuestion extends HttpServlet {
             return;
         }
 
-        int productId = 0;
-        try {
-            productId = productService.getTodayProductId();
-        } catch (Exception e) {
-            // response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "There are no product today");
-        }
+        Product product=null;
+//        try {
+//            Product product = productService.getTodayProduct();
+//        } catch (Exception e) {
+//            // response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "There are no product today");
+//        }
 
         boolean isBadRequest = false;
         try {
-            productId = productService.getTodayProductId();
+            product = productService.getTodayProduct();
         } catch (Exception e) {
             String loginpath = getServletContext().getContextPath() + "/AdminIndex.html";
             response.sendRedirect(loginpath);return;
@@ -87,7 +88,7 @@ public class CreatMarketingQuestion extends HttpServlet {
         }
 
         try {
-            marketingQuestionService.insertQuesToProd(question,productId);
+            marketingQuestionService.insertQuesToProd(question,product);
         } catch (Exception e) {
             String loginpath = getServletContext().getContextPath() + "/AdminHome";
             response.sendRedirect(loginpath);return;

@@ -138,7 +138,7 @@ public class CreateQuestionnary extends HttpServlet {
 
         if(productId == 0) {
             try {
-                productService.setNewProductAfterYesterday(productName, admin.getId(), bytesImage,date);
+                productService.setNewProductAfterYesterday(productName, admin, bytesImage,date);
             } catch (DuplicateInsertion e) {
                 String loginpath = getServletContext().getContextPath() + "/AdminHome?errorMsg=Already have product today, cannot create new one";
                 response.sendRedirect(loginpath);

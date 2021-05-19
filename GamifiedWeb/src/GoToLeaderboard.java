@@ -54,7 +54,6 @@ public class GoToLeaderboard extends HttpServlet {
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
         try {
-            //homePageShowContents = marketingAnswerService.getTodayAnswer();
             userList = userService.getUserOrderByPoint() ;
         } catch (Exception e) {
             ctx.setVariable("errorMsg", "There is no user who filled in the questionnaire of the day.");

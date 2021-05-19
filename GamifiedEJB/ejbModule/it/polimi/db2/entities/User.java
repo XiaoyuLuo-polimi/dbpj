@@ -93,7 +93,7 @@ public class User implements Serializable {
 		this.isblocked = isblocked;
 	}
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH,CascadeType.REMOVE})
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<Questionnaire> questionnaires;
 
 }

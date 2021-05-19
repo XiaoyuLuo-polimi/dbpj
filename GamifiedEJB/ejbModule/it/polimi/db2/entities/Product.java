@@ -27,8 +27,8 @@ public class Product implements Serializable {
     @Column(name = "product_date")
     private LocalDate productTime;
 
-    @Column(name = "admin_id")
-    private int adminId;
+//    @Column(name = "admin_id")
+//    private int adminId;
 
     public int getId() {
         return id;
@@ -62,20 +62,20 @@ public class Product implements Serializable {
         this.productTime = productTime;
     }
 
-    public int getAdminId() {
-        return adminId;
-    }
-
-    public void setAdminId(int adminId) {
-        this.adminId = adminId;
-    }
+//    public int getAdminId() {
+//        return adminId;
+//    }
+//
+//    public void setAdminId(int adminId) {
+//        this.adminId = adminId;
+//    }
 
     public String getImageData() {
         return Base64.getMimeEncoder().encodeToString(image);
     }
 
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
     private List<Questionnaire> questionnaires;
 
     public List<Questionnaire> getQuestionnaires() {
@@ -101,9 +101,18 @@ public class Product implements Serializable {
     }
 
 
+
     @ManyToOne
-    @JoinColumn(name = "admin_id",insertable = false,updatable = false)
+    @JoinColumn(name = "admin_id")
     private Administrator administrator;
+
+    public Administrator getAdministrator() {
+        return administrator;
+    }
+
+    public void setAdministrator(Administrator administrator) {
+        this.administrator = administrator;
+    }
 
 
 }
