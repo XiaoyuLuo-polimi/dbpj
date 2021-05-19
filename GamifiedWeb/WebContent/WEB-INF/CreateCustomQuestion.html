@@ -9,8 +9,9 @@
 
 <form action="CreateCustomQuestion" method="POST">
   <fieldset>
+    <p th:text=" ${infoMsg}"></p>
     <p>
-      Question name: <input type="text"  name="question"  required>
+      Question content: <input type="text"  name="question"  required>
     </p>
     <input type="submit" name="Product">
     <p th:text=" ${errorMsg}"></p>

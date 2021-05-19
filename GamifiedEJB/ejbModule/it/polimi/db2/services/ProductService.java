@@ -1,5 +1,6 @@
 package it.polimi.db2.services;
 
+import it.polimi.db2.entities.Administrator;
 import it.polimi.db2.entities.Product;
 import it.polimi.db2.exceptions.DuplicateInsertion;
 import it.polimi.db2.exceptions.InvalidInsert;
@@ -17,10 +18,10 @@ public class ProductService {
 
     public ProductService() {
     }
-    public void setNewProductAfterYesterday(String name , int adminId, byte[] imagePath, LocalDate date) throws InvalidInsert, DuplicateInsertion {
+    public void setNewProductAfterYesterday(String name , Administrator admin, byte[] imagePath, LocalDate date) throws InvalidInsert, DuplicateInsertion {
         Product product = new Product();
         product.setProductDate(date);
-        product.setAdminId(adminId);
+        product.setAdministrator(admin);
         product.setName(name);
         product.setImage(imagePath);
             try{
@@ -30,7 +31,6 @@ public class ProductService {
                 if(e.getMessage().contains("a POD preceding the current day")){
                     throw new InvalidInsert("You cannot insert a POD preceding the current day");
                 }
-
         }
     }
     public int isExistProductInThatDate(LocalDate date) throws NoResultException{

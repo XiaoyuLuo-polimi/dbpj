@@ -48,6 +48,7 @@ public class CreateQuestionnary extends HttpServlet {
             response.sendRedirect(loginpath);
             return;
         }
+        session.removeAttribute("InsertProductDate");
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
         templateEngine.process(path, ctx, response.getWriter());
         return;
@@ -95,6 +96,7 @@ public class CreateQuestionnary extends HttpServlet {
             response.sendRedirect(adminHomePage);
             return;
         }
+        session.setAttribute("InsertProductDate",date);
 
         response.setContentType("multipart/form-data;charset=utf-8");
         try {
