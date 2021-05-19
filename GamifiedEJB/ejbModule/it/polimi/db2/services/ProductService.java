@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Stateless
 public class ProductService {
@@ -73,6 +74,19 @@ public class ProductService {
         Product product = null;
 
         LocalDate date  = LocalDate.now();
+        try {
+            product = em.createNamedQuery("product.getProdByDate", Product.class).setParameter(1, date).getSingleResult();
+            em.refresh(product);
+        }catch (NoResultException e){
+            return null;
+        }
+        return product;
+    }
+
+
+    public Product getProductByDate(LocalDate date) throws NoResultException{
+        Product product = null;
+
         try {
             product = em.createNamedQuery("product.getProdByDate", Product.class).setParameter(1, date).getSingleResult();
             em.refresh(product);
