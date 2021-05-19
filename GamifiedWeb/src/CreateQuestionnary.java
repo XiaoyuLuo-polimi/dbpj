@@ -162,7 +162,6 @@ public class CreateQuestionnary extends HttpServlet {
             String loginpath = getServletContext().getContextPath() + "/AdminHome?errorMsg=Already Exist prod in that date!";
             response.sendRedirect(loginpath);return;
         }
-
     }
 
     public void destroy(){
