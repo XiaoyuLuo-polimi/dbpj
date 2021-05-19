@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Create Product of the day</title>
+</head>
+<body>
+
+<div align="left">
+  <a th:href = "@{/AdminHome}" >Admin Home Page</a> <br>
+</div>
+
+<span>Please choose a date to inspection information.</span>
+<form action="#" th:action="@{/InspectionSelectPage}" method="POST">
+  <fieldset>
+    Date: <input type="date" name="Date" required min="2000-01-01" max="2099-12-31"><br>
+    <input type="submit" value="Submit">
+  </fieldset>
+</form>
+
+<hr />
+
+<p th:text=" ${errorMsg}"></p>
+
+</body>
+</html>
