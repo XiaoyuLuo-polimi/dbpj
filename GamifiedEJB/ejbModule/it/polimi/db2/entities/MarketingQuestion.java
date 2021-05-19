@@ -13,8 +13,6 @@ public class MarketingQuestion implements Serializable{
     private int id;
     @Column(name = "question_content")
     private String questionContent;
-//    @Column(name = "product_id")
-//    private int productId;
 
     public int getId() {
         return id;
@@ -23,14 +21,6 @@ public class MarketingQuestion implements Serializable{
     public void setId(int id) {
         this.id = id;
     }
-
-//    public int getProductId() {
-//        return productId;
-//    }
-//
-//    public void setProductId(int productId) {
-//        this.productId = productId;
-//    }
 
     public String getQuestionContent() {
         return questionContent;

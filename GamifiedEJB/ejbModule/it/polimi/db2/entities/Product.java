@@ -27,9 +27,6 @@ public class Product implements Serializable {
     @Column(name = "product_date")
     private LocalDate productTime;
 
-//    @Column(name = "admin_id")
-//    private int adminId;
-
     public int getId() {
         return id;
     }
@@ -61,14 +58,6 @@ public class Product implements Serializable {
     public void setProductDate(LocalDate productTime) {
         this.productTime = productTime;
     }
-
-//    public int getAdminId() {
-//        return adminId;
-//    }
-//
-//    public void setAdminId(int adminId) {
-//        this.adminId = adminId;
-//    }
 
     public String getImageData() {
         return Base64.getMimeEncoder().encodeToString(image);

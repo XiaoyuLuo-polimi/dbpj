@@ -30,17 +30,6 @@ public class User implements Serializable {
 
 	private int isblocked;
 
-	// Bidirectional many-to-one association to Mission
-	/*
-	 * Fetch type EAGER allows resorting the relationship list content also in the
-	 * client Web servlet after the creation of a new mission. If you leave the
-	 * default LAZY policy, the relationship is sorted only at the first access but
-	 * then adding a new mission does not trigger the reloading of data from the
-	 * database and thus the sort method in the client does not actually re-sort the
-	 * list of missions. MERGE is not cascaded because we will modify and merge only
-	 * username and surname attributes of the user and do not want to cascade
-	 * detached changes to relationship.
-	 */
 	public User() {
 	}
 
@@ -93,7 +82,16 @@ public class User implements Serializable {
 		this.isblocked = isblocked;
 	}
 
+
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<Questionnaire> questionnaires;
+
+	public List<Questionnaire> getQuestionnaires() {
+		return questionnaires;
+	}
+
+	public void setQuestionnaires(List<Questionnaire> questionnaires) {
+		this.questionnaires = questionnaires;
+	}
 
 }

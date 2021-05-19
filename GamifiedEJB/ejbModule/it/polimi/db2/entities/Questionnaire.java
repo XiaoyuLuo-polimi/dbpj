@@ -28,15 +28,6 @@ public class Questionnaire implements Serializable {
     @Column(name = "create_time")
     private LocalDateTime createTime;
 
-//    @Column(name = "product_id")
-//    private int productId;
-//
-//    @Column(name = "admin_id")
-//    private int adminId;
-//
-//    @Column(name = "user_id")
-//    private int userId;
-
     @Column(name = "iscancelled")
     private int isCancelled;
 
@@ -79,30 +70,6 @@ public class Questionnaire implements Serializable {
     public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
-
-//    public int getProductId() {
-//        return productId;
-//    }
-//
-//    public void setProductId(int productId) {
-//        this.productId = productId;
-//    }
-//
-//    public int getAdminId() {
-//        return adminId;
-//    }
-//
-//    public void setAdminId(int adminId) {
-//        this.adminId = adminId;
-//    }
-//
-//    public int getUserId() {
-//        return userId;
-//    }
-//
-//    public void setUserId(int userId) {
-//        this.userId = userId;
-//    }
 
     public int getIsCancelled() {
         return isCancelled;
