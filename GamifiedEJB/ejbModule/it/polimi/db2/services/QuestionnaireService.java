@@ -2,6 +2,7 @@ package it.polimi.db2.services;
 
 import it.polimi.db2.entities.*;
 import it.polimi.db2.exceptions.HasBeenBlocked;
+import it.polimi.db2.exceptions.InvalidDeletion;
 import it.polimi.db2.exceptions.InvalidInsert;
 import it.polimi.db2.exceptions.OffensiveWordsInsert;
 
@@ -113,7 +114,7 @@ public class QuestionnaireService {
     }
 
 
-    public void deleteQuestionnaireByModifyField(int questionnaireId, Administrator administrator) throws NoResultException {
+    public void deleteQuestionnaireByModifyField(int questionnaireId, Administrator administrator) throws Exception {
         Questionnaire questionnaire = new Questionnaire();
         try{
             questionnaire = em.find(Questionnaire.class,questionnaireId);
@@ -124,8 +125,12 @@ public class QuestionnaireService {
         try{
             this.em.persist(questionnaire);
             this.em.flush();
-        }catch(PersistenceException e){
-            throw new NoResultException("ERROR");
+        }catch (Exception e){
+            if(e.getMessage().contains("create time is the posterior of today")){
+                throw new InvalidDeletion("Deletion should be possible only for a date preceding the current date");
+            }else{
+                throw new Exception(e.getMessage());
+            }
         }
     }
 
