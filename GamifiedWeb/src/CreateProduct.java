@@ -20,8 +20,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @MultipartConfig
-@WebServlet("/CreateQuestionnary")
-public class CreateQuestionnary extends HttpServlet {
+@WebServlet("/CreateProduct")
+public class CreateProduct extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
 
@@ -39,8 +39,8 @@ public class CreateQuestionnary extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Redirect to the Home page and add missions to the parameters
-        String path = "/WEB-INF/CreateQuestionnaire.html";
+         
+        String path = "/WEB-INF/CreateProduct.html";
         ServletContext servletContext = getServletContext();
         String loginpath = getServletContext().getContextPath() + "/AdminIndex.html";
         HttpSession session = request.getSession();
@@ -63,7 +63,7 @@ public class CreateQuestionnary extends HttpServlet {
             response.sendRedirect(adminHomePath);
             return;
         }
-
+        //create a string format date to get the date from front-end(html)
         String strDate;
         try {
             strDate = StringEscapeUtils.escapeJava(request.getParameter("date"));
@@ -74,42 +74,46 @@ public class CreateQuestionnary extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
             return;
         }
+       //convert the date format form String to Localdate and give it a yyyymmdd format
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date = LocalDate.parse(strDate, fmt);
-
+        //set a initinal value for product ID which is 0
         int productId = 0;
-        try {
-            productId = productService.isExistProductInThatDate(date);
-        } catch (Exception e) {
-           // response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "There are no product today");
-        }
-        // Get and parse all parameters from request
-        boolean isBadRequest = false;
-        String productName = null;
-        Part filePart = null;
-        InputStream imageStream = null;
-
+        // if there exist a product in that date, it will return the productId of that date
+        // if not, return a zero (which help us judge the product exist condition in the rest code)
+        productId = productService.isExistProductInThatDate(date);
+        
+        // check is the creat product date is equal or after today(LocalDate.now())
         LocalDate todayDate  = LocalDate.now();
-
         if(todayDate.compareTo(date)>0){
+            //if is true, return a error msg
             String adminHomePage = getServletContext().getContextPath() + "/AdminHome?errorMsg=You cannot insert a product of the day preceding the current day";
             response.sendRedirect(adminHomePage);
             return;
         }
-        session.setAttribute("InsertProductDate",date);
 
+        //set the create product date into session, let subsequent page can use it to judge which date to chooise
+        session.setAttribute("InsertProductDate",date);
+        //set the reponse head, let "image" can submit by it
         response.setContentType("multipart/form-data;charset=utf-8");
+        // Get and parse all parameters from request
+        boolean isBadRequest = false;
+        String productName = null;
+        Part filePart = null;
+        InputStream imageInputStream = null;
         try {
             productName = StringEscapeUtils.escapeJava(request.getParameter("productName"));
+            //make a new file part
             filePart = request.getPart("image");
             String contentType = filePart.getContentType();
-            imageStream = filePart.getInputStream();
+            imageInputStream = filePart.getInputStream();
             if (productName == null || productName.isEmpty() ||
-                    contentType == null || imageStream.available()<=0) {
+                    contentType == null || imageInputStream.available()<=0) {
                 String adminHomePage = getServletContext().getContextPath() + "/AdminHome?errorMsg=The product file can not be empty or wrong format";
                 response.sendRedirect(adminHomePage);
                 return;
             }
+            // constrain the type we can upload
             if (!contentType.contains("jpg")
                     && !contentType.contains("jpeg")
                     && !contentType.contains("png")){
@@ -125,18 +129,17 @@ public class CreateQuestionnary extends HttpServlet {
         }
 
         if (isBadRequest) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
+            String adminHomePage = getServletContext().getContextPath() + "/AdminHome?errorMsg=Incorrect or missing param values";
+            response.sendRedirect(adminHomePage);
             return;
         }
-
-        //
-        // Create mission in DB
+        
         Administrator admin = (Administrator) session.getAttribute("administrator");
 
-        int imageLength = (int) filePart.getSize();
-        byte[] bytesImage = new byte[imageLength];
-        imageStream.read(bytesImage);
-        imageStream.close();
+        int imageInputLength = (int) filePart.getSize();
+        byte[] bytesImage = new byte[imageInputLength];
+        imageInputStream.read(bytesImage);
+        imageInputStream.close();
 
         if(productId == 0) {
             try {
@@ -150,7 +153,7 @@ public class CreateQuestionnary extends HttpServlet {
                 response.sendRedirect(loginpath);
                 return;
             }
-            String path = getServletContext().getContextPath() + "/CreateCustomQuestion";
+            String path = getServletContext().getContextPath() + "/ CreateMarketingQuestion";
             response.sendRedirect(path);return;
         }
         else{

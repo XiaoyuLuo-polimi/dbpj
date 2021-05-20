@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 @MultipartConfig
-@WebServlet("/CreateCustomQuestion")
+@WebServlet("/CreateMarketingQuestion")
 public class CreatMarketingQuestion extends HttpServlet {
     private TemplateEngine templateEngine;
     @EJB(name = "it.polimi.db2.services/MarketingQuestionService")
@@ -41,8 +41,7 @@ public class CreatMarketingQuestion extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Redirect to the Home page and add missions to the parameters
-        String path = "/WEB-INF/CreateCustomQuestion.html";
+        String path = "/WEB-INF/CreateMarketingQuestion.html";
         ServletContext servletContext = getServletContext();
 
         String loginpath = getServletContext().getContextPath() + "/AdminIndex.html";
@@ -66,31 +65,33 @@ public class CreatMarketingQuestion extends HttpServlet {
 
         Product product=null;
         boolean isBadRequest = false;
+        //Get the insert product date from session (which is save by previous /CreateProduct)
         LocalDate date = (LocalDate)session.getAttribute("InsertProductDate");
 
         try {
             product = productService.getProductByDate(date);
         } catch (Exception e) {
-            String loginpath = getServletContext().getContextPath() + "/AdminIndex.html";
-            response.sendRedirect(loginpath);return;
+            String loginpath = getServletContext().getContextPath() + "/AdminHome?errorMsg=Can not get a Product";
+            response.sendRedirect(loginpath);
+            return;
         }
 
-        String question = null;
+        String questionContent = null;
 
         try {
-            question = StringEscapeUtils.escapeJava(request.getParameter("question"));
-
+            questionContent = StringEscapeUtils.escapeJava(request.getParameter("question"));
         } catch (NumberFormatException | NullPointerException e) {
             isBadRequest = true;
 
         }
 
         try {
-            marketingQuestionService.insertQuesToProd(question,product);
+            marketingQuestionService.insertQuesToProd(questionContent,product);
         } catch (Exception e) {
             String loginpath = getServletContext().getContextPath() + "/AdminHome";
             response.sendRedirect(loginpath);return;
         }
+
         String ctxpath = getServletContext().getContextPath();
         String path = ctxpath + "/CreateCustomQuestion";
         response.sendRedirect(path);

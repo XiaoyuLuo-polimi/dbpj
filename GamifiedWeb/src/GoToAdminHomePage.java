@@ -33,7 +33,6 @@ public class GoToAdminHomePage extends HttpServlet{
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Redirect to the Home page and add missions to the parameters
         String path = "/WEB-INF/AdminHome.html";
         ServletContext servletContext = getServletContext();
         String loginpath = getServletContext().getContextPath() + "/AdminIndex.html";

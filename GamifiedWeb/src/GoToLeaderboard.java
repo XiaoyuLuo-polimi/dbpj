@@ -52,7 +52,7 @@ public class GoToLeaderboard extends HttpServlet {
 
         List<User> userList= new ArrayList<>();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-
+        //get a user points list which order by point DESC
         try {
             userList = userService.getUserOrderByPoint() ;
         } catch (Exception e) {

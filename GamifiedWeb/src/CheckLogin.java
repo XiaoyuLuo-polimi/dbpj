@@ -76,7 +76,6 @@ public class CheckLogin extends HttpServlet {
 			// query db to authenticate for user
 			user = usrService.checkCredentials(usrn, pwd);
 		} catch (NonUniqueResultException | CannotConnectToDB e) {
-			//e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");
 			return;
 		}
