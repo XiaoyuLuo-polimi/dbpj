@@ -136,7 +136,8 @@ public class Questionnaire implements Serializable {
 
 
     @ManyToMany
-    //joinColumns指定中间表中关联自己ID的字段，inverseJoinColumns表示中间表中关联对方ID的字段，joinColumn是列名;
+    //joinColumns specify the field associated with its own ID in the intermediate table.
+    //inverseJoinColumns specify the field associated with the counterparty ID in the intermediate table.
     //referencedColumnName is the key of associated table.
     @JoinTable(name="marketing_answer",
             joinColumns = @JoinColumn(name = "questionnaire_id", referencedColumnName = "id"),

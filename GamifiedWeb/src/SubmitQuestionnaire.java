@@ -84,7 +84,7 @@ public class SubmitQuestionnaire extends HttpServlet {
             product = pService.getTodayProduct();
             pId = product.getId();
         } catch (NoResultException noResultException) {
-            pId = -1;
+            pId = 0;
         }
 
         LocalDateTime time=LocalDateTime.now();
