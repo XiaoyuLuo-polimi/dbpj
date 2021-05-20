@@ -38,7 +38,7 @@ public class AdminCheckLogin extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Redirect to the Home page and add missions to the parameters
+        // Redirect to the Home page
         String path = "/AdminIndex.html";
         ServletContext servletContext = getServletContext();
         HttpSession session = request.getSession();
@@ -64,18 +64,9 @@ public class AdminCheckLogin extends HttpServlet {
             return;
         }
         Administrator administrator;
-//        try {
-//            // query db to authenticate for administrator
-//            administrator = administratorService.checkCredentials(usrn, pwd);
-//        } catch (NonUniqueResultException e) {
-//            e.printStackTrace();
-//            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");
-//            return;
-//        }
         administrator = administratorService.checkCredentials(usrn, pwd);
         // If the administrator exists, add info to the session and go to home page, otherwise
         // show login page with error message
-
         String path;
         if (administrator == null) {
             ServletContext servletContext = getServletContext();

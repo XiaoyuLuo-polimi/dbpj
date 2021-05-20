@@ -44,7 +44,7 @@ public class GoToInspectionSelectPage extends HttpServlet {
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Redirect to the Home page and add missions to the parameters
+         
         String pathContext = getServletContext().getContextPath();
         HttpSession session = request.getSession();
         if (session.isNew() || session.getAttribute("administrator") == null) {
@@ -98,23 +98,26 @@ public class GoToInspectionSelectPage extends HttpServlet {
             return;
         }
         else{
-            List<Questionnaire> todayQuestionnaireList = new ArrayList<>();
+            List<Questionnaire> ProductQuestionnaireList = new ArrayList<>();
             try {
-                todayQuestionnaireList = product.getQuestionnaires();
+                ProductQuestionnaireList = product.getQuestionnaires();
             }catch(PersistenceException e){
 
             }
             List<Questionnaire> submittedQuestionnaireList = new ArrayList<>();
             List<Questionnaire> cancelledQuestionnaireList = new ArrayList<>();
 
-            for(Questionnaire q:todayQuestionnaireList){
+            for(Questionnaire q:ProductQuestionnaireList){
+                //select the cancelled questionnaire
                 if(q.getIsCancelled() == 1){
                     cancelledQuestionnaireList.add(q);
                 }
-                else{
+                //select the questionnaire which is not be deleted
+                else if(q.getAdministrator() == null){
                     submittedQuestionnaireList.add(q);
                 }
             }
+            //save those parameter into session
             request.getSession().setAttribute("date", date);
             request.getSession().setAttribute("submittedQuestionnaireList", submittedQuestionnaireList);
             request.getSession().setAttribute("cancelledQuestionnaireList", cancelledQuestionnaireList);

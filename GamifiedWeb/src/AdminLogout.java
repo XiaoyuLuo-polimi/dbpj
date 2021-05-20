@@ -32,7 +32,5 @@ public class AdminLogout extends HttpServlet {
     }
 
     public void destroy(){
-
     }
-
 }

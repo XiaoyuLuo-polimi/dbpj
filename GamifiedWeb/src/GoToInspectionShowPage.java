@@ -57,7 +57,7 @@ public class GoToInspectionShowPage extends HttpServlet {
         String path = "/WEB-INF/InspectionShowPage.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-
+        //if we can get a product, that means we save a product success in SelectPage
         if (session.getAttribute("product") != null){
             ctx.setVariable("submittedQuestionnaireList", session.getAttribute("submittedQuestionnaireList"));
             ctx.setVariable("cancelledQuestionnaireList", session.getAttribute("cancelledQuestionnaireList"));
@@ -73,81 +73,6 @@ public class GoToInspectionShowPage extends HttpServlet {
         templateEngine.process(path, ctx, response.getWriter());
     }
 
-//    @Override
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-//            throws IOException {
-//
-//        // If admin user is not logged in (not present in session) redirect to the login
-//        String pathContext = getServletContext().getContextPath();
-//        HttpSession session = request.getSession();
-//        if (session.isNew() || session.getAttribute("administrator") == null) {
-//            response.sendRedirect(pathContext+ "/AdminIndex.html");
-//            return;
-//        }
-//
-//        String strDate;
-//        try {
-//            strDate = StringEscapeUtils.escapeJava(request.getParameter("Date"));
-//            if (strDate == null) {
-//                throw new Exception("No empty filed!");
-//            }
-//        }catch (Exception e){
-//            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
-//            return;
-//        }
-//        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        LocalDate date = LocalDate.parse(strDate, fmt);
-//        Product product = new Product();
-//        try {
-//            product = productService.getProductByDate(date);
-//        }catch(PersistenceException e){
-//            request.getSession().setAttribute("errorMsg", "Wrong date, there not exist a product.");
-//            response.sendRedirect(pathContext + "/InspectionPage");
-//            return;
-//        }
-//
-//        if(product == null){
-//            request.getSession().setAttribute("errorMsg", "Wrong date, there not exist a product.");
-//            response.sendRedirect(pathContext + "/InspectionPage");
-//            return;
-//        }
-//        else{
-//            List<Questionnaire> todayQuestionnaireList = new ArrayList<>();
-//            try {
-//                todayQuestionnaireList = product.getQuestionnaires();
-//            }catch(PersistenceException e){
-//
-//            }
-//            List<Questionnaire> submittedQuestionnaireList = new ArrayList<>();
-//            List<Questionnaire> cancelledQuestionnaireList = new ArrayList<>();
-//
-//            for(Questionnaire q:todayQuestionnaireList){
-//                if(q.getIsCancelled() == 1){
-//                    cancelledQuestionnaireList.add(q);
-//                }
-//                else{
-//                    submittedQuestionnaireList.add(q);
-//                }
-//            }
-//            request.getSession().setAttribute("date", date);
-//            request.getSession().setAttribute("submittedQuestionnaireList", submittedQuestionnaireList);
-//            request.getSession().setAttribute("cancelledQuestionnaireList", cancelledQuestionnaireList);
-//            request.getSession().setAttribute("product", product);
-//            response.sendRedirect(pathContext + "/InspectionPage");
-//        }
-
-
-
-//
-//        if (submittedQuestionnaireList.isEmpty() && cancelledQuestionnaireList.isEmpty()){
-//            request.getSession().setAttribute("errorMessage", "No value");
-//            response.sendRedirect(pathContext + "/InspectionPage");
-//            return;
-//        }
-//
-//
-//
-//    }
 
     public void destroy(){
 
