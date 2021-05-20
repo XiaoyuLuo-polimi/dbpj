@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,11 +88,18 @@ public class DeleteQuestionnaire extends HttpServlet {
             }
             errorMsg = "Deleted questionnaire successfully!";
         }
-
+        //LocalDate date  = LocalDate.now();
         List<Questionnaire> submittedQuestionnaireList;
-        //get all submitted and not be deleted questionnaire
+        List<Questionnaire> questionnaireListBeforeToday = new ArrayList<>();
+
         try {
             submittedQuestionnaireList = questionnaireService.getAllSubmittedQuestionnaire();
+            LocalDate dateNow  = LocalDate.now();
+            for(Questionnaire q:submittedQuestionnaireList){
+                if(q.getCreateTime().toLocalDate().compareTo(dateNow)<0){
+                    questionnaireListBeforeToday.add(q);
+                }
+            }
         }catch (PersistenceException e){
             ctx.setVariable("errorMsg", "Error occure, pleas try again");
             templateEngine.process(path, ctx, response.getWriter());
@@ -103,7 +111,7 @@ public class DeleteQuestionnaire extends HttpServlet {
             return;
         }
         ctx.setVariable("errorMsg",errorMsg);
-        ctx.setVariable("submittedQuestionnaireList", submittedQuestionnaireList);
+        ctx.setVariable("submittedQuestionnaireList", questionnaireListBeforeToday);
         templateEngine.process(path, ctx, response.getWriter());
 
     }

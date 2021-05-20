@@ -8,7 +8,7 @@
 <body>
 
 <form action="#" th:action="@{/CreateMarketingQuestion}" method="POST">
-  Please input question NO.<p th:text=" ${marketingQuestionNumber}"></p>
+  <p th:text=" Please input question No.${marketingQuestionNumber}"></p>
   <fieldset>
     <p th:text=" ${infoMsg}"></p>
     <p>
@@ -22,8 +22,6 @@
       <a th:href = "@{/AdminHome}" >Return to admin homepage</a> <br>
     </div></td>
 </form>
-
-
 </body>
 </html>
 
