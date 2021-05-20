@@ -105,6 +105,7 @@ public class GoToStatQuestionPage extends HttpServlet {
             path = "/WEB-INF/StatisticalQuestion.html";
             templateEngine.process(path, ctx, response.getWriter());
         }
+
     }
 
 

@@ -40,6 +40,7 @@ public class ProductService {
         Product product = null;
         try {
             product = em.createNamedQuery("product.getProdByDate", Product.class).setParameter(1, date).getSingleResult();
+            em.refresh(product);
         }catch (NoResultException e){
             return 0;
         }
@@ -56,6 +57,7 @@ public class ProductService {
         Product product = null;
         try {
             product = em.createNamedQuery("product.getProdByDate", Product.class).setParameter(1, date).getSingleResult();
+            em.refresh(product);
         }catch (NoResultException e){
             return null;
         }
@@ -67,6 +69,7 @@ public class ProductService {
         LocalDate date  = LocalDate.now();
         try {
             product = em.createNamedQuery("product.getProdByDate", Product.class).setParameter(1, date).getSingleResult();
+            em.refresh(product);
         }catch (NoResultException e){
             return null;
         }
