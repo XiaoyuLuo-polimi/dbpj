@@ -91,7 +91,8 @@ public class CreateProduct extends HttpServlet {
             response.sendRedirect(adminHomePage);
             return;
         }
-
+        int marketingQuestionNum = 1;
+        session.setAttribute("marketingQuestionNumber",1);
         //set the create product date into session, let subsequent page can use it to judge which date to chooise
         session.setAttribute("InsertProductDate",date);
         //set the reponse head, let "image" can submit by it
@@ -153,7 +154,7 @@ public class CreateProduct extends HttpServlet {
                 response.sendRedirect(loginpath);
                 return;
             }
-            String path = getServletContext().getContextPath() + "/ CreateMarketingQuestion";
+            String path = getServletContext().getContextPath() + "/CreateMarketingQuestion";
             response.sendRedirect(path);return;
         }
         else{

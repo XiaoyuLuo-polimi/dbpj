@@ -67,10 +67,8 @@ public class DeleteQuestionnaire extends HttpServlet {
         String path = "/WEB-INF/DeletePage.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-
         Integer questionnaireID;
-        String errorMessage = null;
-
+        String errorMsg = null;
         try {
             questionnaireID = Integer.valueOf(StringEscapeUtils.escapeJava(request.getParameter("questionnaireID")));
         }catch (NumberFormatException e){
@@ -87,26 +85,24 @@ public class DeleteQuestionnaire extends HttpServlet {
                 templateEngine.process(path, ctx, response.getWriter());
                 return;
             }
-            errorMessage = "Deleted questionnaire successfully!";
+            errorMsg = "Deleted questionnaire successfully!";
         }
 
         List<Questionnaire> submittedQuestionnaireList;
-
+        //get all submitted and not be deleted questionnaire
         try {
             submittedQuestionnaireList = questionnaireService.getAllSubmittedQuestionnaire();
         }catch (PersistenceException e){
-            ctx.setVariable("errorMsg", e.getMessage());
+            ctx.setVariable("errorMsg", "Error occure, pleas try again");
             templateEngine.process(path, ctx, response.getWriter());
             return;
         }
-
         if (submittedQuestionnaireList.isEmpty()){
-            ctx.setVariable("errorMsg", "No questionnaire yet");
+            ctx.setVariable("errorMsg", "Submitted Questionnaire is empty.");
             templateEngine.process(path, ctx, response.getWriter());
             return;
         }
-
-        ctx.setVariable("errorMsg",errorMessage);
+        ctx.setVariable("errorMsg",errorMsg);
         ctx.setVariable("submittedQuestionnaireList", submittedQuestionnaireList);
         templateEngine.process(path, ctx, response.getWriter());
 

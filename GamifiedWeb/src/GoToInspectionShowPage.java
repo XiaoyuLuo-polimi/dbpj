@@ -59,11 +59,12 @@ public class GoToInspectionShowPage extends HttpServlet {
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
         //if we can get a product, that means we save a product success in SelectPage
         if (session.getAttribute("product") != null){
+            //set all para into session
             ctx.setVariable("submittedQuestionnaireList", session.getAttribute("submittedQuestionnaireList"));
             ctx.setVariable("cancelledQuestionnaireList", session.getAttribute("cancelledQuestionnaireList"));
             ctx.setVariable("product", session.getAttribute("product"));
             ctx.setVariable("date", session.getAttribute("date"));
-
+            //remove them
             request.getSession().removeAttribute("submittedQuestionnaireList");
             request.getSession().removeAttribute("cancelledQuestionnaireList");
             request.getSession().removeAttribute("product");

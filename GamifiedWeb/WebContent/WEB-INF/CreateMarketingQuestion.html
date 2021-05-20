@@ -7,7 +7,8 @@
 </head>
 <body>
 
-<form action=" CreateMarketingQuestion" method="POST">
+<form action="#" th:action="@{/CreateMarketingQuestion}" method="POST">
+  Please input question NO.<p th:text=" ${marketingQuestionNumber}"></p>
   <fieldset>
     <p th:text=" ${infoMsg}"></p>
     <p>
@@ -16,9 +17,10 @@
     <input type="submit" name="Product">
     <p th:text=" ${errorMsg}"></p>
   </fieldset>
-  <div align="left">
-    <a th:href="@{/AdminHome}">Finish and return to Home page</a>
-  </div>
+  <td th:if="${marketingQuestionNumber} > 1">
+    <div align="left">
+      <a th:href = "@{/AdminHome}" >Return to admin homepage</a> <br>
+    </div></td>
 </form>
 
 

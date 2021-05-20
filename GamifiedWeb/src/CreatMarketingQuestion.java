@@ -51,6 +51,7 @@ public class CreatMarketingQuestion extends HttpServlet {
             return;
         }
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+        ctx.setVariable("marketingQuestionNumber", session.getAttribute("marketingQuestionNumber"));
         templateEngine.process(path, ctx, response.getWriter());
     }
 
@@ -84,16 +85,20 @@ public class CreatMarketingQuestion extends HttpServlet {
             isBadRequest = true;
 
         }
-
+        int marketingQuestionNumber = 0;
+        marketingQuestionNumber = (int)session.getAttribute("marketingQuestionNumber");
         try {
             marketingQuestionService.insertQuesToProd(questionContent,product);
+            marketingQuestionNumber = marketingQuestionNumber+1;
+            session.setAttribute("marketingQuestionNumber",marketingQuestionNumber);
+
         } catch (Exception e) {
             String loginpath = getServletContext().getContextPath() + "/AdminHome";
             response.sendRedirect(loginpath);return;
         }
 
         String ctxpath = getServletContext().getContextPath();
-        String path = ctxpath + "/CreateCustomQuestion";
+        String path = ctxpath + "/CreateMarketingQuestion";
         response.sendRedirect(path);
         return;
     }

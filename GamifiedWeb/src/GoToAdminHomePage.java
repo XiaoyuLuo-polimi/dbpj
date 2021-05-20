@@ -42,6 +42,7 @@ public class GoToAdminHomePage extends HttpServlet{
             return;
         }
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+        session.removeAttribute("marketingQuestionNumber");
         templateEngine.process(path, ctx, response.getWriter());
     }
 
