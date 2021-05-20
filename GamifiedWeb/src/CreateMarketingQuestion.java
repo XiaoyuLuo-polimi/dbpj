@@ -22,7 +22,7 @@ import java.time.LocalDate;
 
 @MultipartConfig
 @WebServlet("/CreateMarketingQuestion")
-public class CreatMarketingQuestion extends HttpServlet {
+public class CreateMarketingQuestion extends HttpServlet {
     private TemplateEngine templateEngine;
     @EJB(name = "it.polimi.db2.services/MarketingQuestionService")
     private MarketingQuestionService marketingQuestionService;
