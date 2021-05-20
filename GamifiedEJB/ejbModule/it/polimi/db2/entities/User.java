@@ -84,6 +84,7 @@ public class User implements Serializable {
 
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	@OrderBy("createTime ASC")
 	private List<Questionnaire> questionnaires;
 
 	public List<Questionnaire> getQuestionnaires() {
