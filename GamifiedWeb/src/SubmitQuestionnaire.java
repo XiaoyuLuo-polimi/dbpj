@@ -100,6 +100,7 @@ public class SubmitQuestionnaire extends HttpServlet {
         //if the button clicked is submit, then prepare all questionnaire data and submit it into DB.
         //if the button clicked is cancel, then insert a cancelled quesitonnaire into DB, and redirect to the user home page.
         if(StringEscapeUtils.escapeJava(request.getParameter("complete")).equals("Previous Page")){
+            request.getSession().removeAttribute("errorMsg");
             String path = getServletContext().getContextPath() + "/MktQuestionPage";
             response.sendRedirect(path);
         }else if (StringEscapeUtils.escapeJava(request.getParameter("complete")).equals("Submit")){

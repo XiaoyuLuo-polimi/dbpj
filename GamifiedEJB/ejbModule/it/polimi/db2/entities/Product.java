@@ -77,7 +77,7 @@ public class Product implements Serializable {
 
 
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST},
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST,CascadeType.REFRESH},
             mappedBy = "product")
     private List<MarketingQuestion> marketingQuestionsList;
 
